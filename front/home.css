@@ -1,22 +1,28 @@
 .videoContainer {
     position: relative;
-    height: 100vh;
+    height: 110vh;
     width: 100%;
+    background-color: var(--dark-black);
 }
 
 video {
-    height: 100vh;
+    height: 110vh;
     width: 100%;
     object-fit: cover;
+    opacity: 0.4;
 }
 
 .videoContainer .overlay {
     position: absolute;
     left: 50vw;
-    bottom: 1vh;
+    bottom: 15vh;
     height: 6vh;
     width: 6vh;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-image: url(assets/icons/arrow.svg);
+    background-repeat: no-repeat;
+    background-size: 50%;
+    background-position: center;
+    /* transform: translateX(-50%); */
 }
 
 .recipesContainer {
@@ -38,12 +44,26 @@ video {
     margin-bottom: 1vh;
 }
 
+.banner h1 {
+    font-size: 3vh;
+    font-weight: 600;
+    color: var(--white);
+}
+
+.recipes {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 2vh;
+    width: 100%;
+}
+
 .recipe {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    width: 50%;
-    height: 50%;
+    width: 50vh;
     background-color: var(--white);
     border: 1px solid black;
     border-radius: 10px;

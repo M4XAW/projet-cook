@@ -29,16 +29,20 @@
   padding: 0;
   box-sizing: border-box;
   font-family: var(--font);
+  scroll-behavior: smooth;
 }
 
 header {
+  position: fixed;
+  top: 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
   height: 10vh;
+  width: 100%;
   padding: 4vh;
-  background-color: var(--dark-black);
   border-bottom: var(--border);
+  z-index: 1;
 }
 
 ul {
