@@ -35,12 +35,43 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1vh 2vw;
+  height: 10vh;
+  padding: 4vh;
   background-color: var(--dark-black);
   border-bottom: var(--border);
 }
 
-link {
+ul {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  gap: 1.5vh;
+  list-style-type: none;
+}
+
+li a {
+  padding: 0 1vh;
+}
+
+a {
   text-decoration: none;
   color: var(--white);
+}
+
+input[type="search"] {
+  height: 5vh;
+  width: 20%;
+  padding: 0 2vh;
+  font-size: 1.6vh;
+  font-weight: 400;
+  outline: none;
+  color: var(--white);
+  background-color: var(--dark-black);
+  border-radius: 1vh;
+  border: var(--border);
+  transition: all 0.3s ease;
+}
+
+input[type="search"]:focus {
+  border-color: var(--grey);
 }

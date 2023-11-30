@@ -21,6 +21,7 @@
                     $result['difficulte'],
                     $result['temps_preparation'],
                     $result['instructions'],
+                    $result['image_url'],
                     $result['id_categorie']
                 );
             }

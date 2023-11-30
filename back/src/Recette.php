@@ -7,15 +7,17 @@ class Recette
     private $difficulte;
     private $tempsPreparation;
     private $instructions;
+    private $urlImage;
     private $idCategorie;
 
-    public function __construct($id, $nom, $difficulte, $tempsPreparation, $instructions, $idCategorie)
+    public function __construct($id, $nom, $difficulte, $tempsPreparation, $instructions, $urlImage, $idCategorie)
     {
         $this->id = $id;
         $this->nom = $nom;
         $this->difficulte = $difficulte;
         $this->tempsPreparation = $tempsPreparation;
         $this->instructions = $instructions;
+        $this->urlImage = $urlImage;
         $this->idCategorie = $idCategorie;
     }
 
@@ -40,6 +42,11 @@ class Recette
     public function getInstructions()
     {
         return $this->instructions;
+    }
+
+    public function getUrlImage()
+    {
+        return $this->urlImage;
     }
 
     public function getIdCategorie()
