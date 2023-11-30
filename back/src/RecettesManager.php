@@ -49,6 +49,12 @@
             $stmt->bindParam(':id_categorie', $id_categorie);
             $stmt->execute();
         }
+
+        public function supprimerRecette($id) {
+            $stmt = $this->pdo->prepare("DELETE FROM recettes WHERE id_recette = :id");
+            $stmt->bindParam(':id', $id);
+            $stmt->execute();
+        }
         
     }
 ?>
