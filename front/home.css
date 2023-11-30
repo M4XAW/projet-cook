@@ -22,15 +22,16 @@ video {
     background-repeat: no-repeat;
     background-size: 50%;
     background-position: center;
+    cursor: pointer;
+    z-index: 1;
     /* transform: translateX(-50%); */
 }
 
 .recipesContainer {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-    padding: 3vh 7vh;
+    padding: 5vh 7vh;
     min-height: 90vh;
     width: 100%;
     background-color: var(--dark-black);
@@ -40,14 +41,20 @@ video {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    height: 5vh;
     width: 100%;
     margin-bottom: 1vh;
 }
 
-.banner h1 {
+.title {
     font-size: 3vh;
     font-weight: 600;
     color: var(--white);
+}
+
+.filter {
+    display: flex;
+    gap: 2vh;
 }
 
 .recipes {
@@ -56,6 +63,7 @@ video {
     align-items: center;
     flex-wrap: wrap;
     gap: 2vh;
+    height: 100%;
     width: 100%;
 }
 
@@ -68,4 +76,8 @@ video {
     border: 1px solid black;
     border-radius: 10px;
     padding: 20px;
+}
+
+.empty {
+    color: var(--white);
 }

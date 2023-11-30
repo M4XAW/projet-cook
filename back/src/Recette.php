@@ -44,7 +44,7 @@ class Recette
         return $this->instructions;
     }
 
-    public function getUrlImage()
+    public function getImageUrl()
     {
         return $this->urlImage;
     }
