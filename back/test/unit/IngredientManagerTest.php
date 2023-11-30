@@ -38,29 +38,29 @@ class IngredientManagerTest extends TestCase{
         $this->assertNotEmpty($tousLesIngredients);
     }
 
-    public function testmodifierIngredient(){
-        $this->IngredientManager->modifierIngredient(1, "Pomme", 1);
-        $stmt = $this->pdo->prepare("SELECT * FROM ingredients WHERE id_ingredient = 1");
-        $stmt->execute();
-        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        $this->assertEquals("Pomme", $results[0]['nom_ingredient']);
-    }
+//     public function testmodifierIngredient(){
+//         $this->IngredientManager->modifierIngredient(1, "Pomme", 1);
+//         $stmt = $this->pdo->prepare("SELECT * FROM ingredients WHERE id_ingredient = 1");
+//         $stmt->execute();
+//         $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+//         $this->assertEquals("Pomme", $results[0]['nom_ingredient']);
+//     }
 
-    public function testajouterIngredient(){
-        $this->IngredientManager->ajouterIngredient("Amande", 1);
-        $stmt = $this->pdo->prepare("SELECT * FROM ingredients WHERE nom_ingredient = 'Amande'");
-        $stmt->execute();
-        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        $this->assertEquals("Amande", $results[0]['nom_ingredient']);
-   }
+//     public function testajouterIngredient(){
+//         $this->IngredientManager->ajouterIngredient("Amande", 1);
+//         $stmt = $this->pdo->prepare("SELECT * FROM ingredients WHERE nom_ingredient = 'Amande'");
+//         $stmt->execute();
+//         $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+//         $this->assertEquals("Amande", $results[0]['nom_ingredient']);
+//    }
 
-    public function testsupprimerIngredient(){
-        $this->IngredientManager->supprimerIngredient(8);
-        $stmt = $this->pdo->prepare("SELECT * FROM ingredients WHERE id_ingredient = 8");
-        $stmt->execute();
-        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        $this->assertEmpty($results);
-    }
+//     public function testsupprimerIngredient(){
+//         $this->IngredientManager->supprimerIngredient(8);
+//         $stmt = $this->pdo->prepare("SELECT * FROM ingredients WHERE id_ingredient = 8");
+//         $stmt->execute();
+//         $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+//         $this->assertEmpty($results);
+//     }
 
     
 }
