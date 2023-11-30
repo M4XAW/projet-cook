@@ -40,52 +40,67 @@ class RecettesManagerTest extends TestCase
         $this->assertNotEmpty($toutesLesRecettes); // Vérifie que le tableau n'est pas vide
     }
 
-    public function ajouterRecette() {
-        // Appel de la méthode pour ajouter une recette
-        $this->RecettesManager->ajouterRecette("Pomme", "Facile", "10", "Couper la pomme", 1);
+    // public function testAjouterRecette() {
+    //     // Appel de la méthode pour ajouter une recette
+    //     $this->RecettesManager->ajouterRecette("Pommes", 1, 1, "Couper la pomme", "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.7",3);
+    
+    //     // Vérification que la recette a bien été ajoutée
+    //     $stmt = $this->pdo->prepare("SELECT * FROM recettes WHERE nom_recette = 'Pommes'");
+    //     $stmt->execute();
+    //     $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+    //     // Vérifiez si des résultats ont été retournés par la requête SQL
+    //     $this->assertGreaterThan(0, count($results), "Aucune recette trouvée pour le nom spécifié");
+    
+    //     // Vérifiez si la recette ajoutée correspond aux informations fournies
+    //     if (count($results) > 0) {
+    //         $this->assertEquals("Pommes", $results[0]['nom_recette']);
+    //     }
+    // }
 
-        // Récupération de la recette ajoutée
-        $stmt = $this->pdo->prepare("SELECT * FROM recettes WHERE nom_recette = 'Pomme'");
+    // public function testsupprimerRecette(){
+    //     // Appel de la méthode pour supprimer une recette
+    //     $this->RecettesManager->supprimerRecette(3);
+
+    //     // Vérification que la recette a bien été supprimée
+    //     $stmt = $this->pdo->prepare("SELECT * FROM recettes WHERE id_recette = 3");
+    //     $stmt->execute();
+    //     $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    //     // Vérifiez si des résultats ont été retournés par la requête SQL
+    //     $this->assertEquals(0, count($results), "La recette n'a pas été supprimée");
+    // }
+
+    public function testModifierRecette() {
+        // Appel de la méthode pour modifier une recette
+        $this->RecettesManager->modifierRecette(2, "Pommes", "Facile", 1, "Couper la pomme", "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.7", 3);
+    
+        // Vérification que la recette a bien été modifiée
+        $stmt = $this->pdo->prepare("SELECT * FROM recettes WHERE id_recette = 2");
         $stmt->execute();
         $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-        // Assertions pour vérifier que la recette a bien été ajoutée
-        $this->assertEquals("Pomme", $results[0]['nom_recette']);
-        $this->assertEquals("Facile", $results[0]['difficulte']);
-        $this->assertEquals("10", $results[0]['temps_preparation']);
-        $this->assertEquals("Couper la pomme", $results[0]['instructions']);
-        $this->assertEquals(1, $results[0]['id_categorie']);
+    
+        // Vérifiez si des résultats ont été retournés par la requête SQL
+        $this->assertGreaterThan(0, count($results), "La recette n'a pas été trouvée");
+    
+        // Vérifiez si la recette modifiée correspond aux informations fournies
+        if (count($results) > 0) {
+            $modifiedRecipe = $results[0];
+            $this->assertEquals("Pommes", $modifiedRecipe['nom_recette']);
+            $this->assertEquals("Facile", $modifiedRecipe['difficulte']);
+            $this->assertEquals(1, $modifiedRecipe['temps_preparation']);
+            $this->assertEquals("Couper la pomme", $modifiedRecipe['instructions']);
+            $this->assertEquals("https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.7", $modifiedRecipe['image_url']);
+            $this->assertEquals(3, $modifiedRecipe['id_categorie']);
+            
+        }
     }
+    
+    
 
-    // public function modifierRecette() {
-    //     // Appel de la méthode pour modifier une recette
-    //     $this->RecettesManager->modifierRecette(1, "Pomme", "Facile", "10", "Couper la pomme", 1);
-
-    //     // Récupération de la recette modifiée
-    //     $stmt = $this->pdo->prepare("SELECT * FROM recettes WHERE id_recette = 1");
-    //     $stmt->execute();
-    //     $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-    //     // Assertions pour vérifier que la recette a bien été modifiée
-    //     $this->assertEquals("Pomme", $results[0]['nom_recette']);
-    //     $this->assertEquals("Facile", $results[0]['difficulte']);
-    //     $this->assertEquals("10", $results[0]['temps_preparation']);
-    //     $this->assertEquals("Couper la pomme", $results[0]['instructions']);
-    //     $this->assertEquals(1, $results[0]['id_categorie']);
-    // }
-
-    // public function supprimerRecette() {
-    //     // Appel de la méthode pour supprimer une recette
-    //     $this->RecettesManager->supprimerRecette(1);
-
-    //     // Récupération de la recette supprimée
-    //     $stmt = $this->pdo->prepare("SELECT * FROM recettes WHERE id_recette = 1");
-    //     $stmt->execute();
-    //     $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-    //     // Assertions pour vérifier que la recette a bien été supprimée
-    //     $this->assertEmpty($results);
-    // }
+    
+    
+    
 }
 
 ?>
