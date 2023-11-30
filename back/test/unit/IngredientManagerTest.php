@@ -39,24 +39,24 @@ class IngredientManagerTest extends TestCase{
     }
 
     public function testmodifierIngredient(){
-        $this->IngredientManager->modifierIngredient(1, "test", 1);
+        $this->IngredientManager->modifierIngredient(1, "Pomme", 1);
         $stmt = $this->pdo->prepare("SELECT * FROM ingredients WHERE id_ingredient = 1");
         $stmt->execute();
         $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        $this->assertEquals("test", $results[0]['nom_ingredient']);
+        $this->assertEquals("Pomme", $results[0]['nom_ingredient']);
     }
 
     public function testajouterIngredient(){
-        $this->IngredientManager->ajouterIngredient("test", 1);
-        $stmt = $this->pdo->prepare("SELECT * FROM ingredients WHERE nom_ingredient = 'test'");
+        $this->IngredientManager->ajouterIngredient("Amande", 1);
+        $stmt = $this->pdo->prepare("SELECT * FROM ingredients WHERE nom_ingredient = 'Amande'");
         $stmt->execute();
         $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        $this->assertEquals("test", $results[0]['nom_ingredient']);
+        $this->assertEquals("Amande", $results[0]['nom_ingredient']);
    }
 
     public function testsupprimerIngredient(){
-        $this->IngredientManager->supprimerIngredient(5);
-        $stmt = $this->pdo->prepare("SELECT * FROM ingredients WHERE id_ingredient = 5");
+        $this->IngredientManager->supprimerIngredient(8);
+        $stmt = $this->pdo->prepare("SELECT * FROM ingredients WHERE id_ingredient = 8");
         $stmt->execute();
         $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
         $this->assertEmpty($results);
