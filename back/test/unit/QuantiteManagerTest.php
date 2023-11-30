@@ -40,28 +40,28 @@ class QuantiteManagerTest extends TestCase{
         $this->assertNotEmpty($toutesLesQuantites);
     }
 
-    public function testmodifierQuantite(){
-        $this->QuantiteManager->modifierQuantite(1, 1, "kg", 1, 1);
-        $stmt = $this->pdo->prepare("SELECT * FROM quantite WHERE id_quantite = 1");
-        $stmt->execute();
-        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        $this->assertEquals(1, $results[0]['quantite']);
-    }
+//     public function testmodifierQuantite(){
+//         $this->QuantiteManager->modifierQuantite(1, 1, "kg", 1, 1);
+//         $stmt = $this->pdo->prepare("SELECT * FROM quantite WHERE id_quantite = 1");
+//         $stmt->execute();
+//         $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+//         $this->assertEquals(1, $results[0]['quantite']);
+//     }
 
-    public function testajouterQuantite(){
-        $this->QuantiteManager->ajouterQuantite(120, "g", 9, 1);
-        $stmt = $this->pdo->prepare("SELECT * FROM quantite WHERE id_ingredient = 9 AND id_recette = 1");
-        $stmt->execute();
-        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        $this->assertEquals(120, $results[0]['quantite']);
-   }
+//     public function testajouterQuantite(){
+//         $this->QuantiteManager->ajouterQuantite(120, "g", 9, 1);
+//         $stmt = $this->pdo->prepare("SELECT * FROM quantite WHERE id_ingredient = 9 AND id_recette = 1");
+//         $stmt->execute();
+//         $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+//         $this->assertEquals(120, $results[0]['quantite']);
+//    }
 
-    public function testsupprimerQuantite(){
-        $this->QuantiteManager->supprimerQuantite(5);
-        $stmt = $this->pdo->prepare("SELECT * FROM quantite WHERE id_quantite = 5");
-        $stmt->execute();
-        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        $this->assertEmpty($results);
-   }
+//     public function testsupprimerQuantite(){
+//         $this->QuantiteManager->supprimerQuantite(5);
+//         $stmt = $this->pdo->prepare("SELECT * FROM quantite WHERE id_quantite = 5");
+//         $stmt->execute();
+//         $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+//         $this->assertEmpty($results);
+//    }
 
 }

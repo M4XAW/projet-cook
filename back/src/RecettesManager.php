@@ -30,27 +30,34 @@
         }
         
 
-        public function modifierRecette($id, $nom, $difficulte, $temps_preparation, $instructions, $id_categorie) {
-            $stmt = $this->pdo->prepare("UPDATE recettes SET nom_recette = :nom, difficulte = :difficulte, temps_preparation = :temps_preparation, instructions = :instructions, id_categorie = :id_categorie WHERE id_recette = :id");
+        public function modifierRecette($id, $nom, $difficulte, $temps_preparation, $instructions, $image_url, $id_categorie) {
+            $stmt = $this->pdo->prepare("UPDATE recettes SET nom_recette = :nom, difficulte = :difficulte, temps_preparation = :temps_preparation, instructions = :instructions, image_url = :image_url, id_categorie = :id_categorie WHERE id_recette = :id");
             $stmt->bindParam(':id', $id);
             $stmt->bindParam(':nom', $nom);
             $stmt->bindParam(':difficulte', $difficulte);
             $stmt->bindParam(':temps_preparation', $temps_preparation);
             $stmt->bindParam(':instructions', $instructions);
+            $stmt->bindParam(':image_url', $image_url);
             $stmt->bindParam(':id_categorie', $id_categorie);
             $stmt->execute();
         }
 
-        public function ajouterRecette($nom, $difficulte, $temps_preparation, $instructions, $id_categorie) {
-            $stmt = $this->pdo->prepare("INSERT INTO recettes (nom_recette, difficulte, temps_preparation, instructions, id_categorie) VALUES (:nom, :difficulte, :temps_preparation, :instructions, :id_categorie)");
+        public function ajouterRecette($nom, $difficulte, $temps_preparation, $instructions, $image_url, $id_categorie) {
+            $stmt = $this->pdo->prepare("INSERT INTO recettes (nom_recette, difficulte, temps_preparation, instructions, image_url, id_categorie) VALUES (:nom, :difficulte, :temps_preparation, :instructions, :image_url, :id_categorie)");
             $stmt->bindParam(':nom', $nom);
             $stmt->bindParam(':difficulte', $difficulte);
             $stmt->bindParam(':temps_preparation', $temps_preparation);
             $stmt->bindParam(':instructions', $instructions);
+            $stmt->bindParam(':image_url', $image_url);
             $stmt->bindParam(':id_categorie', $id_categorie);
             $stmt->execute();
         }
-        
+
+        public function supprimerRecette($id) {
+            $stmt = $this->pdo->prepare("DELETE FROM recettes WHERE id_recette = :id");
+            $stmt->bindParam(':id', $id);
+            $stmt->execute();
+        }
     }
 ?>
 
