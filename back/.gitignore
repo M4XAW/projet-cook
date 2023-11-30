@@ -1,0 +1,14 @@
+#Ignore le dossier vendor
+/vendor
+
+#Ignore phpunit.xml
+phpunit.xml
+
+#Ignore phpunit.result.cache
+.phpunit.result.cache
+
+#Ignore composer.json
+composer.json
+
+#Ignore composer.lock
+composer.lock
