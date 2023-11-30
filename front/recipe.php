@@ -30,7 +30,7 @@ $recette = new RecettesManager($db);
             </ul>
         </nav>
     </header>
-    <main>
+    <main class="recipe">
         <div class="banner">
             <h1>Recettes</h1>
             <input type="search" placeholder="Rechercher une recette">

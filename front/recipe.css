@@ -1,4 +1,4 @@
-main {
+.recipe {
     padding: 3vh 7vh;
     min-height: 90vh;
     width: 100%;
@@ -20,22 +20,4 @@ main {
     border: 1px solid black;
     border-radius: 10px;
     padding: 20px;
-}
-
-input[type="search"] {
-    height: 5vh;
-    width: 20%;
-    padding: 0 2vh;
-    font-size: 1.6vh;
-    font-weight: 400;
-    outline: none;
-    color: var(--white);
-    background-color: var(--dark-black);
-    border-radius: 1vh;
-    border: var(--border);
-    transition: all 0.3s ease;
-}
-
-input[type="search"]:focus {
-    border-color: var(--grey);
 }
