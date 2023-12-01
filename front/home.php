@@ -45,7 +45,7 @@ $recette = new RecettesManager($db);
 
                     foreach ($recettesData as $recetteData) {
                         echo '<div class="recipe">';
-                        echo '<img src="' . $recetteData->getUrlImage() . '" alt="image recette">';
+                        echo '<img src="' . $recetteData->getimage_url() . '" alt="image recette">';
                         echo '<h2>' . $recetteData->getNom() . '</h2>';
                         echo '<p>Difficulté: ' . $recetteData->getDifficulté() . '</p>';
                         echo '<p>Temps de préparation: ' . $recetteData->getTempsPréparation() . '</p>';
