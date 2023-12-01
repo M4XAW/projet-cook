@@ -1,0 +1,64 @@
+.newRecipe {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.videoContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  background-color: var(--dark-black);
+}
+
+video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.4;
+}
+
+.formNewRecipes {
+  position: relative;
+  box-sizing: border-box;
+  padding: 3vh;
+  width: 25%;
+  color: var(--white);
+  background-color: var(--dark-black);
+  border-radius: var(--border-radius);
+  border: var(--border);
+  z-index: 1;
+}
+
+label {
+  display: block;
+  margin-bottom: 0.8vh;
+}
+
+input,
+textarea,
+select {
+  width: 100%;
+  padding: 1vh;
+  margin-bottom: 1vh;
+  color: var(--white);
+  background-color: var(--dark-black);
+  border-radius: var(--border-radius);
+  border: var(--border);
+}
+
+button {
+  background-color: #4caf50;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
