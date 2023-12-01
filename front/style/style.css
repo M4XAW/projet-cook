@@ -77,7 +77,7 @@ input[type="search"] {
   transition: all 0.3s ease;
 }
 
-input[type="search"]:focus {
+input:focus, select:focus {
   border-color: var(--grey);
 }
 
