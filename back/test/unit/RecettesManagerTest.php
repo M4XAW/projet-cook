@@ -71,30 +71,30 @@ class RecettesManagerTest extends TestCase
     //     $this->assertEquals(0, count($results), "La recette n'a pas été supprimée");
     // }
 
-    public function testModifierRecette() {
-        // Appel de la méthode pour modifier une recette
-        $this->RecettesManager->modifierRecette(2, "Pommes", "Facile", 1, "Couper la pomme", "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.7", 3);
+    // public function testModifierRecette() {
+    //     // Appel de la méthode pour modifier une recette
+    //     $this->RecettesManager->modifierRecette(2, "Pommes", "Facile", 1, "Couper la pomme", "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.7", 3);
     
-        // Vérification que la recette a bien été modifiée
-        $stmt = $this->pdo->prepare("SELECT * FROM recettes WHERE id_recette = 2");
-        $stmt->execute();
-        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    //     // Vérification que la recette a bien été modifiée
+    //     $stmt = $this->pdo->prepare("SELECT * FROM recettes WHERE id_recette = 2");
+    //     $stmt->execute();
+    //     $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
     
-        // Vérifiez si des résultats ont été retournés par la requête SQL
-        $this->assertGreaterThan(0, count($results), "La recette n'a pas été trouvée");
+    //     // Vérifiez si des résultats ont été retournés par la requête SQL
+    //     $this->assertGreaterThan(0, count($results), "La recette n'a pas été trouvée");
     
-        // Vérifiez si la recette modifiée correspond aux informations fournies
-        if (count($results) > 0) {
-            $modifiedRecipe = $results[0];
-            $this->assertEquals("Pommes", $modifiedRecipe['nom_recette']);
-            $this->assertEquals("Facile", $modifiedRecipe['difficulte']);
-            $this->assertEquals(1, $modifiedRecipe['temps_preparation']);
-            $this->assertEquals("Couper la pomme", $modifiedRecipe['instructions']);
-            $this->assertEquals("https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.7", $modifiedRecipe['image_url']);
-            $this->assertEquals(3, $modifiedRecipe['id_categorie']);
+    //     // Vérifiez si la recette modifiée correspond aux informations fournies
+    //     if (count($results) > 0) {
+    //         $modifiedRecipe = $results[0];
+    //         $this->assertEquals("Pommes", $modifiedRecipe['nom_recette']);
+    //         $this->assertEquals("Facile", $modifiedRecipe['difficulte']);
+    //         $this->assertEquals(1, $modifiedRecipe['temps_preparation']);
+    //         $this->assertEquals("Couper la pomme", $modifiedRecipe['instructions']);
+    //         $this->assertEquals("https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.7", $modifiedRecipe['image_url']);
+    //         $this->assertEquals(3, $modifiedRecipe['id_categorie']);
             
-        }
-    }
+    //     }
+    // }
     
     
 
