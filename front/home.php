@@ -5,6 +5,7 @@ require_once('../back/src/Recette.php');
 require_once('../back/src/RecettesManager.php');
 
 $recette = new RecettesManager($db);
+$recetteManager = new RecettesManager($db);
 
 ?>
 
@@ -45,27 +46,38 @@ $recette = new RecettesManager($db);
                         <option value="plat">Plats</option>
                         <option value="dessert">Desserts</option>
                     </select>
-                    <input type="search" placeholder="Rechercher">
+                    <form method="GET" action="home.php">
+                        <input type="search" name="search" placeholder="Rechercher" value="<?php echo isset($_GET['search']) ? $_GET['search'] : ''; ?>">
+                        <button type="submit">Rechercher</button>
+                    </form>
                 </div>
             </div>
             <div class="recipes">
-                <?php
-                    $recettesData = $recette->recupererToutesLesRecettes();
-
+            <?php
+                if (isset($_GET['search']) && !empty($_GET['search'])) {
+                    $recherche = $_GET['search'];
+                    $recettesData = $recetteManager->rechercherRecettes($recherche);
+                
+                    if (empty($recettesData)) {
+                        echo '<p class="empty">Aucune recette n\'a été trouvée pour la recherche "' . $recherche . '".</p>';
+                    } else {
+                        foreach ($recettesData as $recetteData) {
+                            $recetteManager->afficherRecette($recetteData);
+                        }
+                    }
+                } else {
+                    $recettesData = $recetteManager->recupererToutesLesRecettes();
+                
                     if (empty($recettesData)) {
                         echo '<p class="empty">Aucune recette n\'a été trouvée.</p>';
                     } else {
                         foreach ($recettesData as $recetteData) {
-                            echo '<div class="recipe">';
-                            echo '<img src="' . $recetteData->getImageUrl() . '" alt="image recette">';
-                            echo '<h2>' . $recetteData->getNom() . '</h2>';
-                            echo '<p>Difficulté: ' . $recetteData->getDifficulté() . '</p>';
-                            echo '<p>Temps de préparation: ' . $recetteData->getTempsPréparation() . '</p>';
-                            // echo '<p>Instructions: ' . $recetteData->getInstructions() . '</p>';
-                            echo '</div>';
+                            $recetteManager->afficherRecette($recetteData);
                         }
                     }
-                ?>
+                }
+
+            ?>
             </div>
         </div>
     </main>
