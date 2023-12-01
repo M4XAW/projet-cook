@@ -38,6 +38,7 @@ $recette = new RecettesManager($db);
             <div class="banner">
                 <h1 class="title">Recettes</h1>
                 <div class="filter">
+                    <a class="addRecipe" href="newRecipe.php"></a>
                     <!-- Faire une boucle pour récupérer toutes les catégories et afficher les recettes en fonction -->
                     <select name="categories" id="categories">
                         <option value="all">Toutes</option>

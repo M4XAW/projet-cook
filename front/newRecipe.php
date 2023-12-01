@@ -15,15 +15,21 @@
 
 <body>
     <header>
-        <a href="home.php">Recettes</a>
+        <a href="home.php">MyRecipes</a>
         <nav>
             <ul>
-                <li><a class="link" href="home.php">Accueil</a></li>
-                <li><a class="link" href="recipe.php">Recettes</a></li>
-                <li><a class="link" href="contact.php">Contact</a></li>
+                <li><a href="home.php">Accueil</a></li>
+                <li><a href="#scroll">Recettes</a></li>
             </ul>
         </nav>
     </header>
+    <main class="newRecipe">
+        <div class="videoContainer">
+            <a class="overlay" href="#scroll"></a>
+            <video src="assets/video/video.mp4" autoplay muted loop start="00:00:30"></video>
+        </div>
+        div.
+    </main>
 </body>
 
 </html>

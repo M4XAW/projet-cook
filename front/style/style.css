@@ -17,6 +17,7 @@
   --dark-green: #38b35d;
   --border-green: 0.3vh solid var(--dark-green);
   --border: 0.3vh solid var(--dark-grey);
+  --border-radius: 1vh;
 }
 
 ::selection {
@@ -71,7 +72,7 @@ input[type="search"] {
   outline: none;
   color: var(--white);
   background-color: var(--dark-black);
-  border-radius: 1vh;
+  border-radius: var(--border-radius);
   border: var(--border);
   transition: all 0.3s ease;
 }
@@ -83,13 +84,13 @@ input[type="search"]:focus {
 select {
   height: 5vh;
   width: 14vh;
-  padding: 0 4vh 0 2vh;
+  padding: 0 2vh;
   font-size: 1.6vh;
   font-weight: 400;
   outline: none;
   color: var(--white);
   background-color: var(--dark-black);
-  border-radius: 1vh;
+  border-radius: var(--border-radius);
   border: var(--border);
   transition: all 0.3s ease;
   appearance: none;
@@ -97,7 +98,6 @@ select {
   background-position: right 2vh center; 
   background-repeat: no-repeat; 
   cursor: pointer; 
-  margin-right: 2vh;
 }
 
 select option {

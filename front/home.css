@@ -57,6 +57,20 @@ video {
     gap: 2vh;
 }
 
+.addRecipe {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 5vh;
+    width: 5vh;
+    background-image: url(assets/icons/cross.svg);
+    background-repeat: no-repeat;
+    background-size: 50%;
+    background-position: center;
+    border: var(--border);
+    border-radius: var(--border-radius);
+}
+
 .recipes {
     display: flex;
     justify-content: space-between;
@@ -73,8 +87,8 @@ video {
     justify-content: center;
     width: 50vh;
     background-color: var(--white);
-    border: 1px solid black;
-    border-radius: 10px;
+    border: var(--border);
+    border-radius: var(--border-radius);
     padding: 20px;
 }
 
