@@ -59,7 +59,7 @@
             $stmt->execute();
         }
 
-        public function ajouterRecette($nom, $difficulte, $temps_preparation, $instructions, $image_url, $id_categorie, $ingredients) {
+        public function ajouterRecette($nom, $difficulte, $temps_preparation, $instructions, $image_url, $id_categorie, $ingredients, $quantites) {
             $this->pdo->beginTransaction();
         
             try {

@@ -72,13 +72,17 @@ video {
   gap: 2vh;
 }
 
-.addRecipe {
+.searchForm {
+  display: flex;
+  gap: 2vh;
+}
+
+.addRecipe, .searchButton {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 5vh;
   width: 5vh;
-  background-image: url(assets/icons/add.svg);
   background-repeat: no-repeat;
   background-size: 40%;
   background-position: center;
@@ -86,9 +90,19 @@ video {
   border-radius: var(--border-radius);
 }
 
+.addRecipe {
+  background-image: url(assets/icons/add.svg);
+}
+
+.searchButton {
+  background-color: transparent;
+  background-image: url(assets/icons/search.svg);
+}
+
 .recipes {
   display: flex;
   flex-wrap: wrap;
+  width: 100%;
   gap: 2vh;
   overflow-y: scroll;
 }

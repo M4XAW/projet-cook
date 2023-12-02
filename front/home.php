@@ -49,11 +49,10 @@ $recetteManager = new RecettesManager($db);
                         <option value="plat">Plats</option>
                         <option value="dessert">Desserts</option>
                     </select>
-                    <form method="GET" action="home.php">
+                    <form class="searchForm" method="GET" action="home.php">
                         <input type="search" name="search" placeholder="Rechercher" value="<?php echo isset($_GET['search']) ? $_GET['search'] : ''; ?>">
-                        <button type="submit">Rechercher</button>
+                        <button class="searchButton" type="submit"></button>
                     </form>
-
                 </div>
             </div>
             
