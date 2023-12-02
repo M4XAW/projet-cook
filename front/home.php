@@ -57,57 +57,92 @@ $recetteManager = new RecettesManager($db);
             <div class="recipes">
                 
                 <?php
-                $recettesData = $recette->recupererToutesLesRecettes();
-
-                if (empty($recettesData)) {
-                    echo '<p class="empty">Aucune recette n\'a été trouvée.</p>';
-                } else {
-                    foreach ($recettesData as $recetteData) {
+                    if (isset($_GET['search']) && !empty($_GET['search'])) {
+                        $recherche = $_GET['search'];
+                        
+                        // Utiliser la fonction generale pour rechercher par nom de recette et ingrédient
+                        $recettesData = $recetteManager->rechercherRecettes($recherche);
+                    
+                        if (empty($recettesData)) {
+                            echo '<p class="empty">Aucune recette n\'a été trouvée pour la recherche "' . $recherche . '".</p>';
+                        } else {
+                            afficherRecettes($recettesData);
+                        }
+                    } else {
+                        // Si aucune recherche n'est effectuée, afficher toutes les recettes de la catégorie sélectionnée
+                        $categorieFilter = isset($_GET['categories']) ? $_GET['categories'] : 'all';
+                
+                        // Récupérer toutes les recettes ou celles d'une catégorie spécifique
+                        if ($categorieFilter == 'all') {
+                            $recettesData = $recetteManager->recupererToutesLesRecettes();
+                        } else {
+                            $recettesData = $recetteManager->recupererRecettesParCategorie($categorieFilter);
+                        }
+                
+                        if (empty($recettesData)) {
+                            echo '<p class="empty">Aucune recette n\'a été trouvée.</p>';
+                        } else {
+                            afficherRecettes($recettesData);
+                        }
+                    }
+                
+                    function afficherRecettes($recettesData) {
+                        foreach ($recettesData as $recetteData) {
+                            afficherRecette($recetteData);
+                        }
+                    }
+                    
+                    function afficherRecette($recetteData) {
                         echo '<a href="recipe.php?id=' . $recetteData->getId() . '">'; // Ajouter un lien vers la page de la recette
                         echo '<div class="recipe">';
                         echo '<div class="recipe-image" style="background-image: url(\'' . $recetteData->getImageUrl() . '\')"></div>'; // Utiliser un conteneur div pour l'image
                         echo '<div class="recipeDetails">';
                         echo '<h2>' . $recetteData->getNom() . '</h2>';
                         echo '<p>Difficulté: ';
-                        if ($recetteData->getDifficulté() == 1) {
-                            echo 'Facile';
-                        } elseif ($recetteData->getDifficulté() == 2) {
-                            echo 'Moyen';
-                        } elseif ($recetteData->getDifficulté() == 3) {
-                            echo 'Difficile';
-                        } else {
-                            echo 'Erreur';
+                        switch ($recetteData->getDifficulté()) {
+                            case 1:
+                                echo 'Facile';
+                                break;
+                            case 2:
+                                echo 'Moyen';
+                                break;
+                            case 3:
+                                echo 'Difficile';
+                                break;
+                            default:
+                                echo 'Erreur';
+                                break;
                         }
                         echo '</p>';
-
-                        echo '<p>Temps de préparation: ' . $recetteData->getTempsPréparation() . '</p>';
-
+                        echo '<p>Temps de préparation: ' . $recetteData->getTempsPréparation() . 'min</p>';
                         echo '<p>Catégorie : ';
-                        if ($recetteData->getIdCategorie() == 1) {
-                            echo 'Entrée';
-                        } elseif ($recetteData->getIdCategorie() == 2) {
-                            echo 'Plat';
-                        } elseif ($recetteData->getIdCategorie() == 3) {
-                            echo 'Dessert';
-                        } else {
-                            echo 'Erreur';
+                        switch ($recetteData->getIdCategorie()) {
+                            case 1:
+                                echo 'Entrée';
+                                break;
+                            case 2:
+                                echo 'Plat';
+                                break;
+                            case 3:
+                                echo 'Dessert';
+                                break;
+                            default:
+                                echo 'Erreur';
+                                break;
                         }
                         echo '</p>';
-
                         echo '<form method="post" action="supprimer_recette.php">';
                         echo '<input type="hidden" name="recette_id" value="' . $recetteData->getId() . '">';
                         echo '<button type="submit" class="delete-button">Supprimer</button>';
                         echo '</form>';
-
                         echo '</div>';
                         echo '</div>';
                         echo '</a>';
                     }
-                }
                 ?>
+                
             </div>
         </div>
-    </div>
     </main>
 </body>
 

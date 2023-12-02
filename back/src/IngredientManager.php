@@ -10,8 +10,7 @@ Class IngredientManager
     public function recupererTousLesIngredients(){
         $stmt = $this->pdo->prepare("SELECT * FROM ingredients");
         $stmt->execute();
-        $results = $stmt->fetchAll(PDO::FETCH_ASSOC); // Utilisez FETCH_ASSOC pour obtenir un tableau associatif
-    
+        $results = $stmt->fetchAll(PDO::FETCH_ASSOC); 
         $ingredients = [];
         foreach ($results as $result) {
             $ingredients[] = new Ingredient(  

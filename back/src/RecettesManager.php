@@ -102,33 +102,11 @@
                 $this->pdo->rollBack();
             }
         }
-
-        // public function rechercherRecettes($recherche) {
-        //     $stmt = $this->pdo->prepare("SELECT * FROM recettes WHERE nom_recette LIKE :recherche");
-        //     $stmt->bindValue(':recherche', '%' . $recherche . '%');
-        //     $stmt->execute();
-        //     $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
         
-        //     $recettes = [];
-        //     foreach ($results as $result) {
-        //         $recettes[] = new Recette(  
-        //             $result['id_recette'],
-        //             $result['nom_recette'],
-        //             $result['difficulte'],
-        //             $result['temps_preparation'],
-        //             $result['instructions'],
-        //             $result['image_url'],
-        //             $result['id_categorie']
-        //         );
-        //     }
-        
-        //     return $recettes;
-        // }
-
         public function rechercherRecettes($recherche) {
             $stmt = $this->pdo->prepare("SELECT DISTINCT r.* FROM recettes r
-                                         JOIN ingredients i ON r.id_recette = i.id_recette
-                                         WHERE r.nom_recette LIKE :recherche OR i.nom_ingredient LIKE :recherche");
+                                        LEFT JOIN ingredients i ON r.id_recette = i.id_recette
+                                        WHERE r.nom_recette LIKE :recherche OR i.nom_ingredient LIKE :recherche");
             $stmt->bindValue(':recherche', '%' . $recherche . '%');
             $stmt->execute();
             $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -148,7 +126,6 @@
         
             return $recettes;
         }
-        
         
         public function afficherRecette(Recette $recetteData) {
             echo '<div class="recipe">';
