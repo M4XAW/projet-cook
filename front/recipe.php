@@ -5,19 +5,23 @@ require_once('../back/src/RecettesManager.php');
 require_once('../back/src/Ingredient.php');
 require_once('../back/src/IngredientManager.php');
 
-$recette = new RecettesManager($db);
+$recetteManager = new RecettesManager($db);
 $ingredientManager = new IngredientManager($db);
 
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    include 'VotreClasseRecette.php'; // Assurez-vous de remplacer 'VotreClasseRecette' par le nom réel de votre classe
-    $recette =
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['recette_id'])) {
+    $recetteId = $_POST['recette_id'];
 
-        $recetteId = $_POST['recette_id'];
+    $resultatSuppression = $recetteManager->supprimerRecetteAvecIngredients($recetteId);
 
-    $recette->supprimerRecette($recetteId);
-    header("Location: home.php");
+    if ($resultatSuppression) {
+        header('Location: home.php');
+        exit();
+    } else {
+        echo "Erreur lors de la suppression de la recette.";
+    }
 }
+
 
 ?>
 
@@ -46,15 +50,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </header>
     <main class="recipePage">
         <div class="recipeContent">
+            <?php
+
+            $recetteData = $recetteManager->recupererRecette($_GET['id']);
+
+            echo '<form method="post" action="recipe.php">';
+            echo '<input type="hidden" name="recette_id" value="' . $recetteData->getId() . '">';
+            echo '<button type="submit" class="deleteButton"></button>';
+            echo '</form>';
+            ?>
+
             <div class="imageContainer">
                 <?php
-                    $recetteData = $recette->recupererRecette($_GET['id']);
-
-                    if ($recetteData) {
-                        echo '<img src="' . $recetteData->getImageUrl() . '" alt="image recette">';
-                    } else {
-                        echo '<p class="empty">Aucune recette n\'a été trouvée.</p>';
-                    }
+                if ($recetteData) {
+                    echo '<img src="' . $recetteData->getImageUrl() . '" alt="image recette">';
+                } else {
+                    echo '<p class="empty">Aucune recette n\'a été trouvée.</p>';
+                }
                 ?>
             </div>
             <div class="recipeInformations">

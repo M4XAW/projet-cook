@@ -4,24 +4,7 @@ require_once('../back/src/config.php');
 require_once('../back/src/Recette.php');
 require_once('../back/src/RecettesManager.php');
 
-$recette = new RecettesManager($db);
 $recetteManager = new RecettesManager($db);
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['recette_id'])) {
-    $recetteManager = new RecettesManager($db);
-
-    $recetteId = $_POST['recette_id'];
-
-    $resultatSuppression = $recetteManager->supprimerRecetteAvecIngredients($recetteId);
-
-    if ($resultatSuppression) {
-        header('Location: home.php');
-        exit();
-    } else {
-        echo "Erreur lors de la suppression de la recette.";
-    }
-}
-
 
 ?>
 
@@ -146,11 +129,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['recette_id'])) {
                         echo 'Erreur';
                     }
                     echo '</p>';
-
-                    echo '<form method="post" action="home.php">';
-                    echo '<input type="hidden" name="recette_id" value="' . $recetteData->getId() . '">';
-                    echo '<button type="submit" class="deleteButton"></button>';
-                    echo '</form>';                    
 
                     echo '</div>';
                     echo '</div>';

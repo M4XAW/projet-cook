@@ -29,6 +29,7 @@ header {
 }
 
 .recipeContent {
+    position: relative;
     display: flex;
     gap: 3vh;
     max-height: 70vh;
@@ -36,6 +37,26 @@ header {
     border-radius: var(--border-radius);
     border: var(--border);
     padding: 2vh;
+}
+
+.deleteButton {
+    position: absolute;
+    top: 3vh;
+    right: 3vh;
+    height: 3vh;
+    width: 3vh;
+    background-image: url(assets/icons/cross.svg);
+    background-size: 50%;
+    background-position: center;
+    background-repeat: no-repeat;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    z-index: 2;
+}
+
+.deleteButton:hover {
+    filter: brightness(200%);
 }
 
 .imageContainer {

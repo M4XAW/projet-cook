@@ -90,26 +90,6 @@ video {
   border-radius: var(--border-radius);
 }
 
-.deleteButton {
-  position: absolute;
-  top: 1vh;
-  right: 1vh;
-  height: 3vh;
-  width: 3vh;
-  background-image: url(assets/icons/cross.svg);
-  background-size: 50%;
-  background-position: center;
-  background-repeat: no-repeat;
-  border: none;
-  background-color: transparent;
-  cursor: pointer;
-  z-index: 2;
-}
-
-.deleteButton:hover {
-  filter: brightness(200%);
-}
-
 .addRecipe {
   background-image: url(assets/icons/add.svg);
 }
