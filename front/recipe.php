@@ -48,13 +48,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div class="recipeContent">
             <div class="imageContainer">
                 <?php
-                $recetteData = $recette->recupererRecette($_GET['id']);
+                    $recetteData = $recette->recupererRecette($_GET['id']);
 
-                if ($recetteData) {
-                    echo '<img src="' . $recetteData->getImageUrl() . '" alt="image recette">';
-                } else {
-                    echo '<p class="empty">Aucune recette n\'a été trouvée.</p>';
-                }
+                    if ($recetteData) {
+                        echo '<img src="' . $recetteData->getImageUrl() . '" alt="image recette">';
+                    } else {
+                        echo '<p class="empty">Aucune recette n\'a été trouvée.</p>';
+                    }
                 ?>
             </div>
             <div class="recipeInformations">
