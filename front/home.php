@@ -7,6 +7,7 @@ require_once('../back/src/RecettesManager.php');
 $recette = new RecettesManager($db);
 $recetteManager = new RecettesManager($db);
 
+
 ?>
 
 <!DOCTYPE html>
@@ -52,12 +53,13 @@ $recetteManager = new RecettesManager($db);
                         <input type="search" name="search" placeholder="Rechercher" value="<?php echo isset($_GET['search']) ? $_GET['search'] : ''; ?>">
                         <button type="submit">Rechercher</button>
                     </form>
+
                 </div>
             </div>
+            
             <div class="recipes">
-                
                 <?php
-                    if (isset($_GET['search']) && !empty($_GET['search'])) {
+                     if (isset($_GET['search']) && !empty($_GET['search'])) {
                         $recherche = $_GET['search'];
                         
                         // Utiliser la fonction generale pour rechercher par nom de recette et ingrédient
@@ -115,32 +117,30 @@ $recetteManager = new RecettesManager($db);
                         }
                         echo '</p>';
                         echo '<p>Temps de préparation: ' . $recetteData->getTempsPréparation() . 'min</p>';
+
                         echo '<p>Catégorie : ';
-                        switch ($recetteData->getIdCategorie()) {
-                            case 1:
-                                echo 'Entrée';
-                                break;
-                            case 2:
-                                echo 'Plat';
-                                break;
-                            case 3:
-                                echo 'Dessert';
-                                break;
-                            default:
-                                echo 'Erreur';
-                                break;
+                        if ($recetteData->getIdCategorie() == 1) {
+                            echo 'Entrée';
+                        } elseif ($recetteData->getIdCategorie() == 2) {
+                            echo 'Plat';
+                        } elseif ($recetteData->getIdCategorie() == 3) {
+                            echo 'Dessert';
+                        } else {
+                            echo 'Erreur';
                         }
                         echo '</p>';
+
                         echo '<form method="post" action="supprimer_recette.php">';
                         echo '<input type="hidden" name="recette_id" value="' . $recetteData->getId() . '">';
                         echo '<button type="submit" class="delete-button">Supprimer</button>';
                         echo '</form>';
+
                         echo '</div>';
                         echo '</div>';
                         echo '</a>';
                     }
+                    
                 ?>
-                
             </div>
         </div>
     </main>

@@ -1,4 +1,6 @@
 <?php
+require_once('../back/src/Ingredient.php');
+
 Class IngredientManager
 {
     private $pdo;

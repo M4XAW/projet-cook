@@ -127,15 +127,15 @@
             return $recettes;
         }
         
-        public function afficherRecette(Recette $recetteData) {
-            echo '<div class="recipe">';
-            echo '<img src="' . $recetteData->getImageUrl() . '" alt="image recette">';
-            echo '<h2>' . $recetteData->getNom() . '</h2>';
-            echo '<p>Difficulté: ' . $recetteData->getDifficulté() . '</p>';
-            echo '<p>Temps de préparation: ' . $recetteData->getTempsPréparation() . '</p>';
-            // echo '<p>Instructions: ' . $recetteData->getInstructions() . '</p>';
-            echo '</div>';
-        }
+        // public function afficherRecette(Recette $recetteData) {
+        //     echo '<div class="recipe">';
+        //     echo '<img src="' . $recetteData->getImageUrl() . '" alt="image recette">';
+        //     echo '<h2>' . $recetteData->getNom() . '</h2>';
+        //     echo '<p>Difficulté: ' . $recetteData->getDifficulté() . '</p>';
+        //     echo '<p>Temps de préparation: ' . $recetteData->getTempsPréparation() . '</p>';
+        //     // echo '<p>Instructions: ' . $recetteData->getInstructions() . '</p>';
+        //     echo '</div>';
+        // }
         
         
     }

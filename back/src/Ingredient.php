@@ -7,7 +7,6 @@ Class Ingredient {
     public function __construct($id_ingredient, $nom_ingredient, $id_recette){
         $this->id_ingredient = $id_ingredient;
         $this->nom_ingredient = $nom_ingredient;
- 
         $this->id_recette = $id_recette;
     }
 

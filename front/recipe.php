@@ -2,6 +2,8 @@
     require_once('../back/src/config.php');
     require_once('../back/src/Recette.php');
     require_once('../back/src/RecettesManager.php');
+    require_once('../back/src/Ingredient.php');
+    require_once('../back/src/IngredientManager.php');
 
     $recette = new RecettesManager($db);
     $ingredient = new IngredientManager($db);
@@ -54,14 +56,37 @@
                     echo '<div class="recipe">';
                     echo '<img src="' . $recetteData->getImageUrl() . '" alt="image recette">';
                     echo '<h2>' . $recetteData->getNom() . '</h2>';
-                    echo '<p>Difficulté: ' . $recetteData->getDifficulté() . '</p>';
+                    echo '<p>Difficulté: ';
+                        switch ($recetteData->getDifficulté()) {
+                            case 1:
+                                echo 'Facile';
+                                break;
+                            case 2:
+                                echo 'Moyen';
+                                break;
+                            case 3:
+                                echo 'Difficile';
+                                break;
+                            default:
+                                echo 'Erreur';
+                                break;
+                        }
+                    echo '</p>';
                     echo '<p>Temps de préparation: ' . $recetteData->getTempsPréparation() . '</p>';
                     echo '<p>Instructions: ' . $recetteData->getInstructions() . '</p>';
-                    echo '<p>Ingrédients: ' . $recetteData->recupererIngredient() . '</p>';
-                    echo '</div>';
-                } else {
-                    echo '<p class="empty">Aucune recette n\'a été trouvée.</p>';
-                }
+                    $ingredients = $ingredient->recupererTousLesIngredients(); // Modify this based on your logic
+            
+                        // Display ingredients
+                        echo '<p>Ingrédients: ';
+                        foreach ($ingredients as $ingredient) {
+                            echo $ingredient->getNom() . ', ';
+                        }
+                        echo '</p>';
+
+                        echo '</div>';
+                    } else {
+                        echo '<p class="empty">Aucune recette n\'a été trouvée.</p>';
+                    }
             ?>
         </div>
     </main>
