@@ -22,22 +22,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['recette_id'])) {
     }
 }
 
-// if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['edit_recette_id'])) {
-//     $editRecetteId = $_POST['edit_recette_id'];
-//     $editedNom = $_POST['edited_nom'];
-//     $editedDifficulte = $_POST['edited_difficulte'];
-//     // Ajoutez d'autres champs selon vos besoins
-
-//     $resultatModification = $recetteManager->modifierRecetteAvecIngredients($editRecetteId, $editedNom, $editedDifficulte)
-    
-//     if ($resultatModification) {
-//         header('Location: recipe.php?id=' . $editRecetteId);
-//         exit();
-//     } else {
-//         echo "Erreur lors de la modification de la recette.";
-//     }
-// }
-
 ?>
 
 <!DOCTYPE html>
@@ -69,16 +53,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['recette_id'])) {
                 <?php
 
                 $recetteData = $recetteManager->recupererRecette($_GET['id']);
-
+                
+                echo '<a class="editButton" href="editRecipe.php?id=' . $recetteData->getId() . '>"></a>';
+                
                 echo '<form method="post" action="recipe.php">';
                 echo '<input type="hidden" name="recette_id" value="' . $recetteData->getId() . '">';
                 echo '<button type="submit" class="deleteButton"></button>';
                 echo '</form>';
-                
-                echo '<form method="post" action="recipe.php">';
-                echo '<input type="hidden" name="recette_id" value="' . $recetteData->getId() . '">';
-                echo '<button type="submit" class="editButton"></button>';
-                echo '</form>';
+
                 ?>
             </div>
 

@@ -32,39 +32,43 @@ class IngredientManagerTest extends TestCase
         $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
 
-    // public function testrecupererTousLesIngredients()
-    // {
-    //     $tousLesIngredients = $this->IngredientManager->recupererTousLesIngredients();
+    public function testAjouterIngredient()
+    {
+        $this->IngredientManager->ajouterIngredient("Amande");
+        $stmt = $this->pdo->prepare("SELECT * FROM ingredient WHERE nom_ingredient = 'Amande'");
+        $stmt->execute();
+        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $this->assertEquals("Amande", $results[0]['nom_ingredient']);
+    }
 
-    //     $this->assertIsArray($tousLesIngredients);
-    //     $this->assertNotEmpty($tousLesIngredients);
-    // }
+    public function testRecupererTousLesIngredients()
+    {
+        $tousLesIngredients = $this->IngredientManager->recupererTousLesIngredients();
 
-    //     public function testmodifierIngredient(){
-//         $this->IngredientManager->modifierIngredient(1, "Pomme", 1);
-//         $stmt = $this->pdo->prepare("SELECT * FROM ingredients WHERE id_ingredient = 1");
-//         $stmt->execute();
-//         $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-//         $this->assertEquals("Pomme", $results[0]['nom_ingredient']);
-//     }
+        $this->assertIsArray($tousLesIngredients);
+        $this->assertNotEmpty($tousLesIngredients);
+    }
 
-    //     public function testajouterIngredient(){
-//         $this->IngredientManager->ajouterIngredient("Amande", 1);
-//         $stmt = $this->pdo->prepare("SELECT * FROM ingredients WHERE nom_ingredient = 'Amande'");
-//         $stmt->execute();
-//         $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-//         $this->assertEquals("Amande", $results[0]['nom_ingredient']);
-//    }
+    public function testModifierIngredient()
+    {
+        $this->IngredientManager->modifierIngredient(22, "NouveauNom");
+        
+        $stmt = $this->pdo->prepare("SELECT * FROM ingredient WHERE id_ingredient = 22");
+        $stmt->execute();
+        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+        $this->assertEquals("NouveauNom", $results[0]['nom_ingredient']);
+    }
 
-    //     public function testsupprimerIngredient(){
-//         $this->IngredientManager->supprimerIngredient(8);
-//         $stmt = $this->pdo->prepare("SELECT * FROM ingredients WHERE id_ingredient = 8");
-//         $stmt->execute();
-//         $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-//         $this->assertEmpty($results);
-//     }
+    public function testSupprimerIngredient()
+    {
+        $this->IngredientManager->supprimerIngredient(22);
+        $stmt = $this->pdo->prepare("SELECT * FROM ingredient WHERE id_ingredient = 22");
+        $stmt->execute();
 
-
+        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $this->assertEmpty($results);
+    }
 }
 
 

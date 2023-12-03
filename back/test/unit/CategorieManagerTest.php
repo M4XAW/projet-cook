@@ -42,7 +42,5 @@
             $this->assertEquals(2, $categorie->getId());
             $this->assertEquals('Plat', $categorie->getNom());
         }
-
-        
     }
 ?>

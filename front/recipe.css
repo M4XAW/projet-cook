@@ -41,15 +41,15 @@ header {
 
 .buttons {
     position: absolute;
+    display: flex;
     top: 3vh;
     right: 3vh;
-    width: 3vh;
     z-index: 2;
 }
 
 .deleteButton {
-    height: 3vh;
-    width: 3vh;
+    height: 4vh;
+    width: 4vh;
     background-image: url(assets/icons/cross.svg);
     background-size: 50%;
     background-position: center;
@@ -60,8 +60,8 @@ header {
 }
 
 .editButton {
-    height: 3vh;
-    width: 3vh;
+    height: 4vh;
+    width: 4vh;
     background-image: url(assets/icons/edit.svg);
     background-size: 50%;
     background-position: center;
@@ -72,7 +72,7 @@ header {
 }
 
 .deleteButton:hover, .editButton:hover {
-    filter: brightness(200%);
+    filter: brightness(300%);
 }
 
 .imageContainer {

@@ -82,14 +82,13 @@ class RecettesManager
             echo "Erreur lors de l'ajout de la recette : " . $e->getMessage();
         }
     }
-
-    public function modifierRecetteAvecIngredients($id_recette, $nom, $difficulte, $temps_preparation, $instructions, $image_url, $id_categorie, $nouveauxIngredients)
+    public function modifierRecette($id_recette, $nom, $difficulte, $temps_preparation, $instructions, $image_url, $id_categorie, $nouveauxIngredients)
     {
         $this->pdo->beginTransaction();
-
+    
         try {
             // Mettre à jour les détails de la recette
-            $stmtUpdateRecette = $this->pdo->prepare("UPDATE recettes SET nom_recette = :nom, difficulte = :difficulte, temps_preparation = :temps_preparation, instructions = :instructions, image_url = :image_url, id_categorie = :id_categorie WHERE id_recette = :id_recette");
+            $stmtUpdateRecette = $this->pdo->prepare("UPDATE recette SET nom_recette = :nom, difficulte = :difficulte, temps_preparation = :temps_preparation, instructions = :instructions, image_url = :image_url, id_categorie = :id_categorie WHERE id_recette = :id_recette");
             $stmtUpdateRecette->bindParam(':id_recette', $id_recette);
             $stmtUpdateRecette->bindParam(':nom', $nom);
             $stmtUpdateRecette->bindParam(':difficulte', $difficulte);
@@ -98,38 +97,18 @@ class RecettesManager
             $stmtUpdateRecette->bindParam(':image_url', $image_url);
             $stmtUpdateRecette->bindParam(':id_categorie', $id_categorie);
             $stmtUpdateRecette->execute();
-
+    
             // Supprimer tous les anciens ingrédients de cette recette
-            $stmtDeleteIngredients = $this->pdo->prepare("DELETE FROM ingredients WHERE id_recette = :id_recette");
+            $stmtDeleteIngredients = $this->pdo->prepare("DELETE FROM recetteIngredient WHERE id_recette = :id_recette");
             $stmtDeleteIngredients->bindParam(':id_recette', $id_recette);
             $stmtDeleteIngredients->execute();
-
-            // Réinsérer les nouveaux ingrédients
-            $stmtInsertIngredients = $this->pdo->prepare("INSERT INTO ingredients (nom_ingredient, id_recette) VALUES (:nom_ingredient, :id_recette)");
-            $stmtInsertQuantite = $this->pdo->prepare("INSERT INTO quantite (quantite, unite, id_ingredient, id_recette) VALUES (:quantite, :unite, :id_ingredient, :id_recette)");
-
-            foreach ($nouveauxIngredients as $ingredient) {
-                $nom_ingredient = $ingredient['nom'];
-                $quantite = $ingredient['quantite'];
-                $unite = $ingredient['unite'];
-
-                $stmtInsertIngredients->bindParam(':nom_ingredient', $nom_ingredient);
-                $stmtInsertIngredients->bindParam(':id_recette', $id_recette);
-                $stmtInsertIngredients->execute();
-
-                $id_ingredient = $this->pdo->lastInsertId(); // Récupérer l'ID de l'ingrédient inséré
-
-                $stmtInsertQuantite->bindParam(':quantite', $quantite);
-                $stmtInsertQuantite->bindParam(':unite', $unite);
-                $stmtInsertQuantite->bindParam(':id_ingredient', $id_ingredient);
-                $stmtInsertQuantite->bindParam(':id_recette', $id_recette);
-                $stmtInsertQuantite->execute();
-            }
-
+    
+    
             $this->pdo->commit();
         } catch (PDOException $e) {
             $this->pdo->rollBack();
             // Gérer l'erreur, la journalisation ou le retourner selon votre logique métier
+            echo "Erreur lors de la modification de la recette : " . $e->getMessage();
         }
     }
 

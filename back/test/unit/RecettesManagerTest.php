@@ -42,10 +42,8 @@ class RecettesManagerTest extends TestCase
 
     public function testAjouterRecetteAvecIngredients()
     {
-        // Création d'un objet RecettesManager avec une instance de PDO fictive
         $recetteManager = new RecettesManager($this->pdo);
     
-        // Paramètres de test pour la recette et ses ingrédients
         $nomRecette = "Recette test";
         $difficulte = "Facile";
         $tempsPreparation = 30;
@@ -68,14 +66,15 @@ class RecettesManagerTest extends TestCase
         );
     
         // Exécution de la méthode à tester depuis l'instance de RecettesManager
-        $recetteManager->ajouterRecetteAvecIngredients($nomRecette, $difficulte, $tempsPreparation, $instructions, $imageUrl, $idCategorie, $ingredients);
+        $idRecette = $recetteManager->ajouterRecette($nomRecette, $difficulte, $tempsPreparation, $instructions, $imageUrl, $idCategorie, $ingredients);
     
         // Assertions pour vérifier si l'ajout s'est déroulé correctement
         // Vous devrez mettre en place des vérifications spécifiques à votre base de données pour vous assurer que les données ont été ajoutées avec succès.
     
         // Exemple d'assertion générique pour vérifier si la méthode ne génère pas d'erreur
-        $this->assertTrue(true); // Remplacez ceci par des assertions spécifiques à votre base de données
+        $this->assertNotEmpty($idRecette); // Remplacez ceci par des assertions spécifiques à votre base de données
     }
+    
 
 // public function testModifierRecetteAvecIngredients()
 // {

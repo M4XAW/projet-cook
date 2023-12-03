@@ -42,10 +42,10 @@ $recetteManager = new RecettesManager($db);
                     <a class="addRecipe" href="newRecipe.php"></a>
                     <!-- Faire une boucle pour récupérer toutes les catégories et afficher les recettes en fonction -->
                     <select name="categories" id="categories">
-                        <option value="all" selected>Toutes</option>
-                        <option value="entree">Entrées</option>
-                        <option value="plat">Plats</option>
-                        <option value="dessert">Desserts</option>
+                        <option value="1" selected>Toutes</option>
+                        <option value="2">Entrées</option>
+                        <option value="3">Plats</option>
+                        <option value="4">Desserts</option>
                     </select>
                     <form class="searchForm" method="GET" action="home.php">
                         <input type="search" name="search" placeholder="Rechercher"

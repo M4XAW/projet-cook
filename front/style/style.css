@@ -104,3 +104,13 @@ select option {
   background-color: var(--dark-black);
   color: var(--white);
 }
+
+.editButtons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cancel {
+  background-color: var(--red);
+}

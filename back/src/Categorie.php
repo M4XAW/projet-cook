@@ -18,4 +18,13 @@ Class Categorie{
         return $this->nom;
     }
 
+    public function setId($id){
+        $this->id = $id;
+    }
+
+    public function setNom($nom){
+        $this->nom = $nom;
+    }
 }
+
+?>
