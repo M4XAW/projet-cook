@@ -52,16 +52,6 @@ class Recette
     public function getIdCategorie()
     {
         return $this->idCategorie;
-    }
-
-    public function getIngredients()
-    {
-        return $this->ingredients;
-    }
-
-    public function getQuantite()
-    {
-        return $this->quantite;
-    }   
+    } 
 }
 
