@@ -16,4 +16,33 @@
             }
             return $categories;
         }
+
+        public function recupererRecettesParCategorie($categorie) {
+            $stmt = $this->pdo->prepare("SELECT recette.*, categorie.nom_categorie 
+                            FROM recette 
+                            INNER JOIN categorie ON recette.id_categorie = categorie.id_categorie 
+                            WHERE categorie.nom_categorie = :categorie");
+
+
+                $stmt->bindParam(':categorie', $categorie);
+            
+                $stmt->execute();
+            $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        
+            $recettes = [];
+            foreach ($results as $result) {
+                $recettes[] = new Recette(
+                    $result['id_recette'],
+                    $result['nom_recette'],
+                    $result['difficulte'],
+                    $result['temps_preparation'],
+                    $result['instructions'],
+                    $result['image_url'],
+                    $result['id_categorie']
+                );
+            }
+        
+            return $recettes;
+        }
+        
 }
