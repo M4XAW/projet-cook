@@ -33,7 +33,7 @@ header {
     display: flex;
     gap: 3vh;
     height: 70vh;
-    max-width: 70vw;
+    width: 70vw;
     border-radius: var(--border-radius);
     border: var(--border);
     padding: 2vh;
