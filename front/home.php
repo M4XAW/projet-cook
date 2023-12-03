@@ -31,28 +31,45 @@ $recette = new RecettesManager($db);
     </header>
     <main class="home">
         <div class="videoContainer">
-            <div class="overlay"></div>
+            <a class="overlay" href="#scroll"></a>
             <video src="assets/video/video.mp4" autoplay muted loop start="00:00:30"></video>
         </div>
+        <h1 class="titleHome">Découvrez de délicieuses recettes sur MyRecipes</h1>
         <div class="recipesContainer" id="scroll">
             <div class="banner">
                 <h1 class="title">Recettes</h1>
-                <input type="search" placeholder="Rechercher">
+                <div class="filter">
+                    <a class="addRecipe" href="newRecipe.php"></a>
+                    <!-- Faire une boucle pour récupérer toutes les catégories et afficher les recettes en fonction -->
+                    <select name="categories" id="categories">
+                        <option value="all" selected>Toutes</option>
+                        <option value="entree">Entrées</option>
+                        <option value="plat">Plats</option>
+                        <option value="dessert">Desserts</option>
+                    </select>
+                    <input type="search" placeholder="Rechercher">
+                </div>
             </div>
             <div class="recipes">
-                <?php
-                    $recettesData = $recette->recupererToutesLesRecettes();
+    <?php
+    $recettesData = $recette->recupererToutesLesRecettes();
 
-                    foreach ($recettesData as $recetteData) {
-                        echo '<div class="recipe">';
-                        echo '<img src="' . $recetteData->getimage_url() . '" alt="image recette">';
-                        echo '<h2>' . $recetteData->getNom() . '</h2>';
-                        echo '<p>Difficulté: ' . $recetteData->getDifficulté() . '</p>';
-                        echo '<p>Temps de préparation: ' . $recetteData->getTempsPréparation() . '</p>';
-                        // echo '<p>Instructions: ' . $recetteData->getInstructions() . '</p>';
-                        echo '</div>';
-                    }
-                ?>
+    foreach ($recettesData as $recetteData) {
+        echo '<div class="recipe">';
+        echo '<img src="' . $recetteData->getImage_url() . '" alt="image recette">';
+        echo '<h2>' . $recetteData->getNom() . '</h2>';
+        echo '<p>Difficulté: ' . $recetteData->getDifficulté() . '</p>';
+        echo '<p>Temps de préparation: ' . $recetteData->getTempsPréparation() . '</p>';
+        echo '<p>Instructions: ' . $recetteData->getInstructions() . '</p>';
+        echo '<p>Ingredients: ';
+        foreach ($recetteData->getIngredients() as $ingredient) {
+            echo $ingredient->getNom() . ': ' . $ingredient->getQuantite() . ' ' . $ingredient->getUnite() . ', ';
+        }
+        echo '</p>';
+        echo '</div>';
+    }
+    ?>
+</div>
             </div>
         </div>
     </main>

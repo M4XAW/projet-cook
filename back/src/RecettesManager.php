@@ -177,14 +177,6 @@
                 echo "Erreur lors de la suppression : " . $e->getMessage();
                 return false; // En cas d'échec
             }
-        }
-         
-        
-        
-        
-        
+        }       
     }
 ?>
-
-
-    

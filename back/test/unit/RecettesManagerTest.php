@@ -51,23 +51,23 @@ class RecettesManagerTest extends TestCase
     //     $recetteManager = new RecettesManager($this->pdo);
     
     //     // Paramètres de test pour la recette et ses ingrédients
-    //     $nomRecette = "Recette test";
+    //     $nomRecette = "Tartiflette";
     //     $difficulte = "Facile";
     //     $tempsPreparation = 30;
-    //     $instructions = "Instructions de test pour la recette.";
+    //     $instructions = "un de ces jour on vas faire une tartiflette";
     //     $imageUrl = "http://exemple.com/image.jpg";
-    //     $idCategorie = 1;
+    //     $idCategorie = 2;
     
     //     $ingredients = array(
     //         array(
-    //             'nom' => 'Ingrédient 1',
+    //             'nom' => 'pomme',
     //             'quantite' => 100,
     //             'unite' => 'g'
     //         ),
     //         array(
-    //             'nom' => 'Ingrédient 2',
+    //             'nom' => 'sucre',
     //             'quantite' => 2,
-    //             'unite' => 'pcs'
+    //             'unite' => 'g'
     //         )
     //         // Ajoutez autant d'ingrédients que nécessaire pour le test
     //     );
@@ -145,7 +145,7 @@ class RecettesManagerTest extends TestCase
         $recettesManager = new RecettesManager($this->pdo);
         
         // ID de la recette de test
-        $idRecetteTest = 7;
+        $idRecetteTest = 9;
         
         
         // Appel de la méthode pour supprimer la recette
@@ -169,3 +169,4 @@ class RecettesManagerTest extends TestCase
 }
 
 ?>
+

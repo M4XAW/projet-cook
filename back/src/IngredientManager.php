@@ -1,5 +1,6 @@
 <?php
-Class IngredientManager{
+Class IngredientManager
+{
     private $pdo;
 
     public function __construct(PDO $pdo) {
@@ -22,7 +23,21 @@ Class IngredientManager{
     
         return $ingredients;
     }
+
+    public function recupererIngredient($id) {
+        $stmt = $this->pdo->prepare("SELECT * FROM ingredients WHERE id_ingredient = :id");
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC); 
+        
+        $ingredient = new Ingredient(  
+            $result['id_ingredient'],
+            $result['nom_ingredient'],
+            $result['id_recette']
+        );
     
+        return $ingredient;
+    }
 
     public function modifierIngredient($id, $nom, $id_recette) {
         $stmt = $this->pdo->prepare("UPDATE ingredients SET nom_ingredient = :nom, id_recette = :id_recette WHERE id_ingredient = :id");
