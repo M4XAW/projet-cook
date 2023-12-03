@@ -54,6 +54,18 @@ select {
   border: var(--border);
 }
 
+.checkboxContainer {
+  display: flex;
+}
+
+.checkboxInput {
+  width: fit-content;
+}
+
+.checkboxLabel {
+  margin-left: 0.5vh;
+}
+
 button {
   background-color: #4caf50;
   color: white;
