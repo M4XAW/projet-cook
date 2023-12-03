@@ -6,23 +6,21 @@ include_once("../back/src/IngredientManager.php");
 $recettesManager = new RecettesManager($db);
 $ingredientManager = new IngredientManager($db);
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['nom'], $_POST['difficulty'], $_POST['temps_preparation'], $_POST['instructions'], $_POST['image_url'], $_POST['category'])) {
     $nom = $_POST['nom'];
     $difficulte = $_POST['difficulty'];
     $temps_preparation = $_POST['temps_preparation'];
     $instructions = $_POST['instructions'];
     $image_url = $_POST['image_url'];
     $id_categorie = $_POST['category'];
-
-    // Récupérer les ingrédients sélectionnés
     $ingredients = isset($_POST['ingredients']) ? $_POST['ingredients'] : [];
 
-    // Ajouter la recette avec les ingrédients
-    $recettesManager->ajouterRecette($nom, $difficulte, $temps_preparation, $instructions, $image_url, $id_categorie, $ingredients);
+    $recettesManager->ajouterRecetteAvecIngredients($nom, $difficulte, $temps_preparation, $instructions, $image_url, $id_categorie, $ingredients);
 
     header("Location: home.php");
     exit();
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -62,15 +60,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <input type="number" id="temps_preparation" name="temps_preparation" required>
 
             <label for="ingredients">Ingrédients:</label>
-
             <?php
-                $ingredients = $ingredientManager->recupererTousLesIngredients();
-                foreach ($ingredients as $ingredient) {
-                    echo '<div class="checkboxContainer">';
-                    echo '<input type="checkbox" id="' . $ingredient->getNom() . '" name="ingredients[]" value="' . $ingredient->getId() . '" class="checkboxInput">';
-                    echo '<label for="' . $ingredient->getNom() . '" class="checkboxLabel">' . $ingredient->getNom() . '</label>';
-                    echo '</div>';
-                }
+            $ingredients = $ingredientManager->recupererTousLesIngredients();
+            foreach ($ingredients as $ingredient) {
+                echo '<div class="checkboxContainer">';
+                echo '<input type="checkbox" id="' . $ingredient->getNom() . '" name="ingredients[]" value="' . $ingredient->getId() . '" class="checkboxInput">';
+                echo '<label for="' . $ingredient->getNom() . '" class="checkboxLabel">' . $ingredient->getNom() . '</label>';
+                echo '</div>';
+            }
             ?>
 
             <label for="instructions">Instructions:</label>

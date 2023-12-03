@@ -9,6 +9,8 @@ class Recette
     private $instructions;
     private $image_url;
     private $idCategorie;
+    private $ingredients = [];
+    private $quantite = [];
 
     public function __construct($id, $nom, $difficulte, $tempsPreparation, $instructions, $image_url, $idCategorie)
     {
@@ -19,6 +21,8 @@ class Recette
         $this->instructions = $instructions;
         $this->image_url = $image_url;
         $this->idCategorie = $idCategorie;
+        // $this->ingredients = $ingredients;
+        // $this->quantite = $quantite;
     }
 
     public function getId()
@@ -53,5 +57,15 @@ class Recette
     {
         return $this->idCategorie;
     }
+
+    public function getIngredients()
+    {
+        return $this->ingredients;
+    }
+
+    public function getQuantite()
+    {
+        return $this->quantite;
+    }   
 }
 

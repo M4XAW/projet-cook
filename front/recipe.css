@@ -82,11 +82,16 @@ header {
     overflow: hidden;
 }
 
+.imageContainer:hover img {
+    transform: scale(1.1);
+}
+
 .imageContainer img {
     height: 100%;
     width: 100%;
     object-fit: cover;
     border-radius: var(--border-radius);
+    transition: transform 0.5s ease;
 }
 
 .recipeInformations {
@@ -116,6 +121,14 @@ header {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 2vh;
+}
+
+.preparationTime, .instructions {
+    margin-bottom: 2vh;
+}
+
+.ingredientsList {
+    display: inline-block;
 }
 
 .banner {

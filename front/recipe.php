@@ -12,7 +12,7 @@ $ingredientManager = new IngredientManager($db);
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['recette_id'])) {
     $recetteId = $_POST['recette_id'];
 
-    $resultatSuppression = $recetteManager->supprimerRecette($recetteId);
+    $resultatSuppression = $recetteManager->supprimerRecetteAvecIngredients($recetteId);
 
     if ($resultatSuppression) {
         header('Location: home.php');
@@ -22,21 +22,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['recette_id'])) {
     }
 }
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['edit_recette_id'])) {
-    $editRecetteId = $_POST['edit_recette_id'];
-    $editedNom = $_POST['edited_nom'];
-    $editedDifficulte = $_POST['edited_difficulte'];
-    // Ajoutez d'autres champs selon vos besoins
+// if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['edit_recette_id'])) {
+//     $editRecetteId = $_POST['edit_recette_id'];
+//     $editedNom = $_POST['edited_nom'];
+//     $editedDifficulte = $_POST['edited_difficulte'];
+//     // Ajoutez d'autres champs selon vos besoins
 
-    $resultatModification = $recetteManager->modifierRecette($id_recette, $nom, $difficulte, $temps_preparation, $instructions, $image_url, $id_categorie, $nouveauxIngredients);
+//     $resultatModification = $recetteManager->modifierRecetteAvecIngredients($editRecetteId, $editedNom, $editedDifficulte)
     
-    if ($resultatModification) {
-        header('Location: recipe.php?id=' . $editRecetteId);
-        exit();
-    } else {
-        echo "Erreur lors de la modification de la recette.";
-    }
-}
+//     if ($resultatModification) {
+//         header('Location: recipe.php?id=' . $editRecetteId);
+//         exit();
+//     } else {
+//         echo "Erreur lors de la modification de la recette.";
+//     }
+// }
 
 ?>
 
@@ -115,15 +115,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['edit_recette_id'])) {
                     
                     echo '</div>';
 
-                    echo '<p>Temps de préparation : ' . $recetteData->getTempsPréparation() . 'min</p>';
-                    echo '<p>Instructions : ' . $recetteData->getInstructions() . '</p>';
-                    $ingredientManagers = $ingredientManager->recupererTousLesIngredients(); // Modify this based on your logic
+                    echo '<p class="preparationTime">Temps de préparation : ' . $recetteData->getTempsPréparation() . 'min</p>';
+                    echo '<p class="instructions">Instructions : ' . $recetteData->getInstructions() . '</p>';
+                    $ingredientsRecette = $ingredientManager->recupererIngredientsParRecette($recetteData->getId());
                 
-                    echo '<p>Ingrédients : ';
-                    foreach ($ingredientManagers as $ingredientManager) {
-                        echo $ingredientManager->getNom() . ', ';
+                    if ($recetteData) {
+                        echo '<p>Ingrédients :</p>';
+                        echo '<ul class="ingredientsList">';
+                        foreach ($ingredientsRecette as $ingredientRecette) {
+                            echo '<li>• ' . $ingredientRecette->getNom() . ' (' . $ingredientRecette->getQuantite() . ' ' . $ingredientRecette->getUnite() . ')</li>';
+                        }
+                        echo '</ul>';
                     }
-                    echo '</p>';
+                    
                 }
                 ?>
             </div>

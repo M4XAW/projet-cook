@@ -2,12 +2,14 @@
 Class Ingredient {
     private $id_ingredient;
     private $nom_ingredient;
-    private $id_recette;
+    private $quantite;
+    private $unite;
 
-    public function __construct($id_ingredient, $nom_ingredient, $id_recette){
+    public function __construct($id_ingredient, $nom_ingredient, $quantite, $unite){
         $this->id_ingredient = $id_ingredient;
         $this->nom_ingredient = $nom_ingredient;
-        $this->id_recette = $id_recette;
+        $this->quantite = $quantite;
+        $this->unite = $unite;
     }
 
     public function getId(){
@@ -18,8 +20,12 @@ Class Ingredient {
         return $this->nom_ingredient;
     }
 
-    public function getIdRecette(){
-        return $this->id_recette;
+    public function getQuantite(){
+        return $this->quantite;
+    }
+
+    public function getUnite(){
+        return $this->unite;
     }
 
     public function setId($id_ingredient){
@@ -30,9 +36,12 @@ Class Ingredient {
         $this->nom_ingredient = $nom_ingredient;
     }
 
+    public function setQuantite($quantite){
+        $this->quantite = $quantite;
+    }
 
-    public function setIdRecette($id_recette){
-        $this->id_recette = $id_recette;
+    public function setUnite($unite){
+        $this->unite = $unite;
     }
 }
 
