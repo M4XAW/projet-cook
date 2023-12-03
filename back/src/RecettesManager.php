@@ -98,10 +98,10 @@
                 $this->pdo->rollBack();
                 // Gérer l'erreur, la journalisation ou le retourner selon votre logique métier
             }
+        }
 
         
         public function modifierRecetteAvecIngredients($id_recette, $nom, $difficulte, $temps_preparation, $instructions, $image_url, $id_categorie, $nouveauxIngredients) {
-            
             $this->pdo->beginTransaction();
         
             try {
@@ -177,8 +177,12 @@
                 echo "Erreur lors de la suppression : " . $e->getMessage();
                 return false; // En cas d'échec
             }
-        }       
-    }
+        }
+         
+        
+        
+        
+        
 
     public function rechercherRecettes($recherche)
     {
@@ -205,44 +209,8 @@
         return $recettes;
     }
 
-    public function supprimerRecetteAvecIngredients($id_recette)
-    {
-        $this->pdo->beginTransaction();
+   
 
-        try {
-            // Supprimer les quantités liées aux ingrédients de cette recette
-            $stmtDeleteQuantites = $this->pdo->prepare("DELETE FROM quantite WHERE id_recette = :id_recette");
-            $stmtDeleteQuantites->bindParam(':id_recette', $id_recette);
-            $stmtDeleteQuantites->execute();
-
-            // Supprimer les ingrédients de cette recette
-            $stmtDeleteIngredients = $this->pdo->prepare("DELETE FROM ingredients WHERE id_recette = :id_recette");
-            $stmtDeleteIngredients->bindParam(':id_recette', $id_recette);
-            $stmtDeleteIngredients->execute();
-
-            // Supprimer la recette elle-même
-            $stmtDeleteRecette = $this->pdo->prepare("DELETE FROM recettes WHERE id_recette = :id_recette");
-            $stmtDeleteRecette->bindParam(':id_recette', $id_recette);
-            $stmtDeleteRecette->execute();
-
-            $this->pdo->commit();
-            return true; // Indique que la suppression a réussi
-        } catch (PDOException $e) {
-            $this->pdo->rollBack();
-            // Gérer l'erreur, la journalisation ou le retourner selon votre logique métier
-            echo "Erreur lors de la suppression : " . $e->getMessage();
-            return false; // En cas d'échec
-        }
-    }
-
-    // public function afficherRecette(Recette $recetteData) {
-    //     echo '<div class="recipe">';
-    //     echo '<img src="' . $recetteData->getImageUrl() . '" alt="image recette">';
-    //     echo '<h2>' . $recetteData->getNom() . '</h2>';
-    //     echo '<p>Difficulté: ' . $recetteData->getDifficulté() . '</p>';
-    //     echo '<p>Temps de préparation: ' . $recetteData->getTempsPréparation() . '</p>';
-    //     // echo '<p>Instructions: ' . $recetteData->getInstructions() . '</p>';
-    //     echo '</div>';
-    // }
+   
 }
 ?>

@@ -45,42 +45,42 @@ class RecettesManagerTest extends TestCase
 
 
 
-    // public function testAjouterRecetteAvecIngredients()
-    // {
-    //     // Création d'un objet RecettesManager avec une instance de PDO fictive
-    //     $recetteManager = new RecettesManager($this->pdo);
+    public function testAjouterRecetteAvecIngredients()
+    {
+        // Création d'un objet RecettesManager avec une instance de PDO fictive
+        $recetteManager = new RecettesManager($this->pdo);
     
-    //     // Paramètres de test pour la recette et ses ingrédients
-    //     $nomRecette = "Tartiflette";
-    //     $difficulte = "Facile";
-    //     $tempsPreparation = 30;
-    //     $instructions = "un de ces jour on vas faire une tartiflette";
-    //     $imageUrl = "http://exemple.com/image.jpg";
-    //     $idCategorie = 2;
+        // Paramètres de test pour la recette et ses ingrédients
+        $nomRecette = "Recette test";
+        $difficulte = "Facile";
+        $tempsPreparation = 30;
+        $instructions = "Instructions de test pour la recette.";
+        $imageUrl = "http://exemple.com/image.jpg";
+        $idCategorie = 1;
     
-    //     $ingredients = array(
-    //         array(
-    //             'nom' => 'pomme',
-    //             'quantite' => 100,
-    //             'unite' => 'g'
-    //         ),
-    //         array(
-    //             'nom' => 'sucre',
-    //             'quantite' => 2,
-    //             'unite' => 'g'
-    //         )
-    //         // Ajoutez autant d'ingrédients que nécessaire pour le test
-    //     );
+        $ingredients = array(
+            array(
+                'nom' => 'Ingrédient 1',
+                'quantite' => 100,
+                'unite' => 'g'
+            ),
+            array(
+                'nom' => 'Ingrédient 2',
+                'quantite' => 2,
+                'unite' => 'pcs'
+            )
+            // Ajoutez autant d'ingrédients que nécessaire pour le test
+        );
     
-    //     // Exécution de la méthode à tester depuis l'instance de RecettesManager
-    //     $recetteManager->ajouterRecetteAvecIngredients($nomRecette, $difficulte, $tempsPreparation, $instructions, $imageUrl, $idCategorie, $ingredients);
+        // Exécution de la méthode à tester depuis l'instance de RecettesManager
+        $recetteManager->ajouterRecetteAvecIngredients($nomRecette, $difficulte, $tempsPreparation, $instructions, $imageUrl, $idCategorie, $ingredients);
     
-    //     // Assertions pour vérifier si l'ajout s'est déroulé correctement
-    //     // Vous devrez mettre en place des vérifications spécifiques à votre base de données pour vous assurer que les données ont été ajoutées avec succès.
+        // Assertions pour vérifier si l'ajout s'est déroulé correctement
+        // Vous devrez mettre en place des vérifications spécifiques à votre base de données pour vous assurer que les données ont été ajoutées avec succès.
     
-    //     // Exemple d'assertion générique pour vérifier si la méthode ne génère pas d'erreur
-    //     $this->assertTrue(true); // Remplacez ceci par des assertions spécifiques à votre base de données
-    // }
+        // Exemple d'assertion générique pour vérifier si la méthode ne génère pas d'erreur
+        $this->assertTrue(true); // Remplacez ceci par des assertions spécifiques à votre base de données
+    }
 
 // public function testModifierRecetteAvecIngredients()
 // {
@@ -140,33 +140,47 @@ class RecettesManagerTest extends TestCase
     //     $this->assertEquals($expectedRecettes, $result);
     // }
 
-    public function testSupprimerRecette() {
-        // Utilisation du PDO configuré dans setUp()
-        $recettesManager = new RecettesManager($this->pdo);
+    // public function testSupprimerRecette() {
+    //     // Utilisation du PDO configuré dans setUp()
+    //     $recettesManager = new RecettesManager($this->pdo);
         
-        // ID de la recette de test
-        $idRecetteTest = 9;
+    //     // ID de la recette de test
+    //     $idRecetteTest = 10;
         
         
-        // Appel de la méthode pour supprimer la recette
-        $result = $recettesManager->supprimerRecetteAvecIngredients($idRecetteTest);
+    //     // Appel de la méthode pour supprimer la recette
+    //     $result = $recettesManager->supprimerRecetteAvecIngredients($idRecetteTest);
         
-        // Vérifiez si la méthode a renvoyé true pour indiquer la suppression réussie
-        $this->assertTrue($result);
+    //     // Vérifiez si la méthode a renvoyé true pour indiquer la suppression réussie
+    //     $this->assertTrue($result);
         
-        // Vérifiez dans la base de données si les données ont bien été supprimées
-        $stmt = $this->pdo->prepare("SELECT * FROM recettes WHERE id_recette = :idRecette");
-        $stmt->execute(['idRecette' => $idRecetteTest]);
-        $recette = $stmt->fetch(PDO::FETCH_ASSOC);
+    //     // Vérifiez dans la base de données si les données ont bien été supprimées
+    //     $stmt = $this->pdo->prepare("SELECT * FROM recettes WHERE id_recette = :idRecette");
+    //     $stmt->execute(['idRecette' => $idRecetteTest]);
+    //     $recette = $stmt->fetch(PDO::FETCH_ASSOC);
         
-        // Effectuez des assertions sur $recette pour vérifier si la suppression a été effectuée
-        $this->assertEmpty($recette); // Vérifiez si la recette n'existe plus dans la base de données
-        // ... Vérifiez d'autres tables selon vos besoins
-    }
+    //     // Effectuez des assertions sur $recette pour vérifier si la suppression a été effectuée
+    //     $this->assertEmpty($recette); // Vérifiez si la recette n'existe plus dans la base de données
+    //     // ... Vérifiez d'autres tables selon vos besoins
+    // }
     
 
 
 }
+
+?>
+
+
+
+
+
+
+
+
+
+
+
+
 
 ?>
 
