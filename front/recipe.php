@@ -1,4 +1,5 @@
 <?php
+
 require_once('../back/src/config.php');
 require_once('../back/src/Recette.php');
 require_once('../back/src/RecettesManager.php');
@@ -8,11 +9,10 @@ require_once('../back/src/IngredientManager.php');
 $recetteManager = new RecettesManager($db);
 $ingredientManager = new IngredientManager($db);
 
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['recette_id'])) {
     $recetteId = $_POST['recette_id'];
 
-    $resultatSuppression = $recetteManager->supprimerRecetteAvecIngredients($recetteId);
+    $resultatSuppression = $recetteManager->supprimerRecette($recetteId);
 
     if ($resultatSuppression) {
         header('Location: home.php');
@@ -22,6 +22,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['recette_id'])) {
     }
 }
 
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['edit_recette_id'])) {
+    $editRecetteId = $_POST['edit_recette_id'];
+    $editedNom = $_POST['edited_nom'];
+    $editedDifficulte = $_POST['edited_difficulte'];
+    // Ajoutez d'autres champs selon vos besoins
+
+    $resultatModification = $recetteManager->modifierRecette($id_recette, $nom, $difficulte, $temps_preparation, $instructions, $image_url, $id_categorie, $nouveauxIngredients);
+    
+    if ($resultatModification) {
+        header('Location: recipe.php?id=' . $editRecetteId);
+        exit();
+    } else {
+        echo "Erreur lors de la modification de la recette.";
+    }
+}
 
 ?>
 
@@ -40,7 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['recette_id'])) {
 
 <body>
     <header>
-        <a href="home.php">Recettes</a>
+        <a href="home.php">MyRecipes</a>
         <nav>
             <ul>
                 <li><a class="link" href="home.php">Accueil</a></li>
@@ -50,15 +65,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['recette_id'])) {
     </header>
     <main class="recipePage">
         <div class="recipeContent">
-            <?php
+            <div class="buttons">
+                <?php
 
-            $recetteData = $recetteManager->recupererRecette($_GET['id']);
+                $recetteData = $recetteManager->recupererRecette($_GET['id']);
 
-            echo '<form method="post" action="recipe.php">';
-            echo '<input type="hidden" name="recette_id" value="' . $recetteData->getId() . '">';
-            echo '<button type="submit" class="deleteButton"></button>';
-            echo '</form>';
-            ?>
+                echo '<form method="post" action="recipe.php">';
+                echo '<input type="hidden" name="recette_id" value="' . $recetteData->getId() . '">';
+                echo '<button type="submit" class="deleteButton"></button>';
+                echo '</form>';
+                
+                echo '<form method="post" action="recipe.php">';
+                echo '<input type="hidden" name="recette_id" value="' . $recetteData->getId() . '">';
+                echo '<button type="submit" class="editButton"></button>';
+                echo '</form>';
+                ?>
+            </div>
 
             <div class="imageContainer">
                 <?php
@@ -72,28 +94,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['recette_id'])) {
             <div class="recipeInformations">
                 <?php
                 if ($recetteData) {
+                    echo '<div class="titleContainer">';
                     echo '<h2>' . $recetteData->getNom() . '</h2>';
-                    echo '<p>Difficulté: ';
+                    echo '<p>';
                     switch ($recetteData->getDifficulté()) {
                         case 1:
-                            echo 'Facile';
+                            echo '<span style="color: #4CAF50;">Facile</span>';
                             break;
                         case 2:
-                            echo 'Moyen';
+                            echo '<span style="color: #FFC107;">Moyen</span>';
                             break;
                         case 3:
-                            echo 'Difficile';
+                            echo '<span style="color: #FF5722;">Difficile</span>';
                             break;
                         default:
-                            echo 'Erreur';
+                            echo '<span;">Erreur</span>';
                             break;
                     }
-                    echo '</p>';
-                    echo '<p>Temps de préparation: ' . $recetteData->getTempsPréparation() . '</p>';
-                    echo '<p>Instructions: ' . $recetteData->getInstructions() . '</p>';
+                    echo '</p>';                    
+                    
+                    echo '</div>';
+
+                    echo '<p>Temps de préparation : ' . $recetteData->getTempsPréparation() . 'min</p>';
+                    echo '<p>Instructions : ' . $recetteData->getInstructions() . '</p>';
                     $ingredientManagers = $ingredientManager->recupererTousLesIngredients(); // Modify this based on your logic
                 
-                    echo '<p>Ingrédients: ';
+                    echo '<p>Ingrédients : ';
                     foreach ($ingredientManagers as $ingredientManager) {
                         echo $ingredientManager->getNom() . ', ';
                     }
@@ -101,6 +127,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['recette_id'])) {
                 }
                 ?>
             </div>
+
         </div>
         <div class="videoContainerRecipe">
             <video src="assets/video/video.mp4" autoplay muted loop start="00:00:30"></video>

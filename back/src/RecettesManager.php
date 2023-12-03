@@ -51,18 +51,6 @@ class RecettesManager
         return $recette;
     }
 
-    public function modifierRecette($id, $nom, $difficulte, $temps_preparation, $instructions, $id_categorie)
-    {
-        $stmt = $this->pdo->prepare("UPDATE recettes SET nom_recette = :nom, difficulte = :difficulte, temps_preparation = :temps_preparation, instructions = :instructions, id_categorie = :id_categorie WHERE id_recette = :id");
-        $stmt->bindParam(':id', $id);
-        $stmt->bindParam(':nom', $nom);
-        $stmt->bindParam(':difficulte', $difficulte);
-        $stmt->bindParam(':temps_preparation', $temps_preparation);
-        $stmt->bindParam(':instructions', $instructions);
-        $stmt->bindParam(':id_categorie', $id_categorie);
-        $stmt->execute();
-    }
-
     public function ajouterRecette($nom, $difficulte, $temps_preparation, $instructions, $image_url, $id_categorie, $ingredients, $quantites)
     {
         $this->pdo->beginTransaction();
@@ -108,6 +96,56 @@ class RecettesManager
         }
     }
 
+    public function modifierRecette($id_recette, $nom, $difficulte, $temps_preparation, $instructions, $image_url, $id_categorie, $nouveauxIngredients) {
+        $this->pdo->beginTransaction();
+    
+        try {
+            // Mettre à jour les détails de la recette
+            $stmtUpdateRecette = $this->pdo->prepare("UPDATE recettes SET nom_recette = :nom, difficulte = :difficulte, temps_preparation = :temps_preparation, instructions = :instructions, image_url = :image_url, id_categorie = :id_categorie WHERE id_recette = :id_recette");
+            $stmtUpdateRecette->bindParam(':id_recette', $id_recette);
+            $stmtUpdateRecette->bindParam(':nom', $nom);
+            $stmtUpdateRecette->bindParam(':difficulte', $difficulte);
+            $stmtUpdateRecette->bindParam(':temps_preparation', $temps_preparation);
+            $stmtUpdateRecette->bindParam(':instructions', $instructions);
+            $stmtUpdateRecette->bindParam(':image_url', $image_url);
+            $stmtUpdateRecette->bindParam(':id_categorie', $id_categorie);
+            $stmtUpdateRecette->execute();
+    
+            // Supprimer tous les anciens ingrédients de cette recette
+            $stmtDeleteIngredients = $this->pdo->prepare("DELETE FROM ingredients WHERE id_recette = :id_recette");
+            $stmtDeleteIngredients->bindParam(':id_recette', $id_recette);
+            $stmtDeleteIngredients->execute();
+    
+            // Réinsérer les nouveaux ingrédients
+            $stmtInsertIngredients = $this->pdo->prepare("INSERT INTO ingredients (nom_ingredient, id_recette) VALUES (:nom_ingredient, :id_recette)");
+            $stmtInsertQuantite = $this->pdo->prepare("INSERT INTO quantite (quantite, unite, id_ingredient, id_recette) VALUES (:quantite, :unite, :id_ingredient, :id_recette)");
+    
+            foreach ($nouveauxIngredients as $ingredient) {
+                $nom_ingredient = $ingredient['nom'];
+                $quantite = $ingredient['quantite'];
+                $unite = $ingredient['unite'];
+    
+                $stmtInsertIngredients->bindParam(':nom_ingredient', $nom_ingredient);
+                $stmtInsertIngredients->bindParam(':id_recette', $id_recette);
+                $stmtInsertIngredients->execute();
+    
+                $id_ingredient = $this->pdo->lastInsertId(); // Récupérer l'ID de l'ingrédient inséré
+    
+                $stmtInsertQuantite->bindParam(':quantite', $quantite);
+                $stmtInsertQuantite->bindParam(':unite', $unite);
+                $stmtInsertQuantite->bindParam(':id_ingredient', $id_ingredient);
+                $stmtInsertQuantite->bindParam(':id_recette', $id_recette);
+                $stmtInsertQuantite->execute();
+            }
+    
+            $this->pdo->commit();
+        } catch (PDOException $e) {
+            $this->pdo->rollBack();
+            // Gérer l'erreur, la journalisation ou le retourner selon votre logique métier
+        }
+    }
+
+
     public function rechercherRecettes($recherche)
     {
         $stmt = $this->pdo->prepare("SELECT DISTINCT r.* FROM recettes r
@@ -133,26 +171,25 @@ class RecettesManager
         return $recettes;
     }
 
-    public function supprimerRecetteAvecIngredients($id_recette)
-    {
+    public function supprimerRecette($id_recette) {
         $this->pdo->beginTransaction();
-
+    
         try {
             // Supprimer les quantités liées aux ingrédients de cette recette
             $stmtDeleteQuantites = $this->pdo->prepare("DELETE FROM quantite WHERE id_recette = :id_recette");
             $stmtDeleteQuantites->bindParam(':id_recette', $id_recette);
             $stmtDeleteQuantites->execute();
-
+    
             // Supprimer les ingrédients de cette recette
             $stmtDeleteIngredients = $this->pdo->prepare("DELETE FROM ingredients WHERE id_recette = :id_recette");
             $stmtDeleteIngredients->bindParam(':id_recette', $id_recette);
             $stmtDeleteIngredients->execute();
-
+    
             // Supprimer la recette elle-même
             $stmtDeleteRecette = $this->pdo->prepare("DELETE FROM recettes WHERE id_recette = :id_recette");
             $stmtDeleteRecette->bindParam(':id_recette', $id_recette);
             $stmtDeleteRecette->execute();
-
+    
             $this->pdo->commit();
             return true; // Indique que la suppression a réussi
         } catch (PDOException $e) {

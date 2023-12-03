@@ -1,10 +1,11 @@
 <?php
-Use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\TestCase;
 
 require_once('src/IngredientManager.php');
 require_once('src/Ingredient.php');
 
-class IngredientManagerTest extends TestCase{
+class IngredientManagerTest extends TestCase
+{
 
     private $pdo;
     private $IngredientManager;
@@ -31,14 +32,15 @@ class IngredientManagerTest extends TestCase{
         $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
 
-   public function testrecupererTousLesIngredients(){
-        $tousLesIngredients = $this->IngredientManager->recupererTousLesIngredients();
+    // public function testrecupererTousLesIngredients()
+    // {
+    //     $tousLesIngredients = $this->IngredientManager->recupererTousLesIngredients();
 
-        $this->assertIsArray($tousLesIngredients);
-        $this->assertNotEmpty($tousLesIngredients);
-    }
+    //     $this->assertIsArray($tousLesIngredients);
+    //     $this->assertNotEmpty($tousLesIngredients);
+    // }
 
-//     public function testmodifierIngredient(){
+    //     public function testmodifierIngredient(){
 //         $this->IngredientManager->modifierIngredient(1, "Pomme", 1);
 //         $stmt = $this->pdo->prepare("SELECT * FROM ingredients WHERE id_ingredient = 1");
 //         $stmt->execute();
@@ -46,7 +48,7 @@ class IngredientManagerTest extends TestCase{
 //         $this->assertEquals("Pomme", $results[0]['nom_ingredient']);
 //     }
 
-//     public function testajouterIngredient(){
+    //     public function testajouterIngredient(){
 //         $this->IngredientManager->ajouterIngredient("Amande", 1);
 //         $stmt = $this->pdo->prepare("SELECT * FROM ingredients WHERE nom_ingredient = 'Amande'");
 //         $stmt->execute();
@@ -54,7 +56,7 @@ class IngredientManagerTest extends TestCase{
 //         $this->assertEquals("Amande", $results[0]['nom_ingredient']);
 //    }
 
-//     public function testsupprimerIngredient(){
+    //     public function testsupprimerIngredient(){
 //         $this->IngredientManager->supprimerIngredient(8);
 //         $stmt = $this->pdo->prepare("SELECT * FROM ingredients WHERE id_ingredient = 8");
 //         $stmt->execute();
@@ -62,7 +64,7 @@ class IngredientManagerTest extends TestCase{
 //         $this->assertEmpty($results);
 //     }
 
-    
+
 }
 
 

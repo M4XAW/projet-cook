@@ -32,17 +32,22 @@ header {
     position: relative;
     display: flex;
     gap: 3vh;
-    max-height: 70vh;
+    height: 70vh;
     max-width: 70vw;
     border-radius: var(--border-radius);
     border: var(--border);
     padding: 2vh;
 }
 
-.deleteButton {
+.buttons {
     position: absolute;
     top: 3vh;
     right: 3vh;
+    width: 3vh;
+    z-index: 2;
+}
+
+.deleteButton {
     height: 3vh;
     width: 3vh;
     background-image: url(assets/icons/cross.svg);
@@ -52,10 +57,21 @@ header {
     border: none;
     background-color: transparent;
     cursor: pointer;
-    z-index: 2;
 }
 
-.deleteButton:hover {
+.editButton {
+    height: 3vh;
+    width: 3vh;
+    background-image: url(assets/icons/edit.svg);
+    background-size: 50%;
+    background-position: center;
+    background-repeat: no-repeat;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.deleteButton:hover, .editButton:hover {
     filter: brightness(200%);
 }
 
@@ -84,17 +100,22 @@ header {
 
 .recipeInformations h2 {
     font-size: 4vh;
-    margin-bottom: 2vh;
 }
 
 .recipeInformations p {
     font-size: 2vh;
-    margin-bottom: 2vh;
 }
 
 .recipeInformations .empty {
     text-align: center;
     margin-top: 5vh;
+}
+
+.titleContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2vh;
 }
 
 .banner {

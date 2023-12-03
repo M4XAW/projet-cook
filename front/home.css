@@ -97,6 +97,11 @@ video {
 .searchButton {
   background-color: transparent;
   background-image: url(assets/icons/search.svg);
+  cursor: pointer;
+}
+
+.searchButton:hover {
+  filter: brightness(200%);
 }
 
 .recipes {

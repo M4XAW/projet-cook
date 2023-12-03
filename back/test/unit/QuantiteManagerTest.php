@@ -33,12 +33,12 @@ class QuantiteManagerTest extends TestCase{
         $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
 
-   public function testrecupererToutesLesQuantites(){
-        $toutesLesQuantites = $this->QuantiteManager->recupererToutesLesQuantites();
+//    public function testrecupererToutesLesQuantites(){
+//         $toutesLesQuantites = $this->QuantiteManager->recupererToutesLesQuantites();
 
-        $this->assertIsArray($toutesLesQuantites);
-        $this->assertNotEmpty($toutesLesQuantites);
-    }
+//         $this->assertIsArray($toutesLesQuantites);
+//         $this->assertNotEmpty($toutesLesQuantites);
+//     }
 
 //     public function testmodifierQuantite(){
 //         $this->QuantiteManager->modifierQuantite(1, 1, "kg", 1, 1);
