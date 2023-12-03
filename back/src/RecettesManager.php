@@ -15,11 +15,11 @@ class RecettesManager
         $stmt->bindParam(':id', $id);
         $stmt->execute();
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
-    
+
         if (!$result) {
             return null;
         }
-    
+
         $recette = new Recette(
             $result['id_recette'],
             $result['nom_recette'],
@@ -29,9 +29,9 @@ class RecettesManager
             $result['image_url'],
             $result['id_categorie']
         );
-    
+
         return $recette;
-    }    
+    }
 
     public function recupererToutesLesRecettes()
     {
@@ -55,13 +55,13 @@ class RecettesManager
         return $recettes;
     }
 
-    public function ajouterRecetteAvecIngredients($nom, $difficulte, $temps_preparation, $instructions, $image_url, $id_categorie, $ingredients)
+    public function ajouterRecette($nom, $difficulte, $temps_preparation, $instructions, $image_url, $id_categorie)
     {
         $this->pdo->beginTransaction();
 
         try {
             // Insérer les détails de la recette
-            $stmtRecette = $this->pdo->prepare("INSERT INTO recettes (nom_recette, difficulte, temps_preparation, instructions, image_url, id_categorie) VALUES (:nom, :difficulte, :temps_preparation, :instructions, :image_url, :id_categorie)");
+            $stmtRecette = $this->pdo->prepare("INSERT INTO recette (nom_recette, difficulte, temps_preparation, instructions, image_url, id_categorie) VALUES (:nom, :difficulte, :temps_preparation, :instructions, :image_url, :id_categorie)");
             $stmtRecette->bindParam(':nom', $nom);
             $stmtRecette->bindParam(':difficulte', $difficulte);
             $stmtRecette->bindParam(':temps_preparation', $temps_preparation);
@@ -70,13 +70,12 @@ class RecettesManager
             $stmtRecette->bindParam(':id_categorie', $id_categorie);
             $stmtRecette->execute();
 
-            $id_recette = $this->pdo->lastInsertId(); // Récupérer l'ID de la recette insérée
-
-            // Appeler la méthode ajouterIngredients de la classe IngredientsManager
-            $ingredientsManager = new IngredientManager($this->pdo);
-            $ingredientsManager->ajouterIngredients($ingredients, $id_recette);
+            // Récupérer l'ID de la recette nouvellement insérée
+            $id_recette = $this->pdo->lastInsertId();
 
             $this->pdo->commit();
+
+            return $id_recette;
         } catch (PDOException $e) {
             $this->pdo->rollBack();
             // Gérer l'erreur, la journalisation ou le retourner selon votre logique métier
@@ -137,18 +136,18 @@ class RecettesManager
     public function supprimerRecetteAvecIngredients($id_recette)
     {
         $this->pdo->beginTransaction();
-    
+
         try {
             // Supprimer les quantités liées aux ingrédients de cette recette
             $stmtDeleteQuantites = $this->pdo->prepare("DELETE FROM recetteIngredient WHERE id_recette = :id_recette");
             $stmtDeleteQuantites->bindParam(':id_recette', $id_recette);
             $stmtDeleteQuantites->execute();
-    
+
             // Supprimer la recette elle-même
             $stmtDeleteRecette = $this->pdo->prepare("DELETE FROM recette WHERE id_recette = :id_recette");
             $stmtDeleteRecette->bindParam(':id_recette', $id_recette);
             $stmtDeleteRecette->execute();
-    
+
             $this->pdo->commit();
             return true; // Indique que la suppression a réussi
         } catch (PDOException $e) {
@@ -157,7 +156,7 @@ class RecettesManager
             echo "Erreur lors de la suppression : " . $e->getMessage();
             return false; // En cas d'échec
         }
-    }    
+    }
 
     public function rechercherRecettes($recherche)
     {
@@ -168,9 +167,9 @@ class RecettesManager
             $rechercheParam = '%' . $recherche . '%';
             $stmt->bindParam(':recherche', $rechercheParam);
             $stmt->execute();
-            
+
             $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    
+
             $recettes = [];
             foreach ($results as $result) {
                 $recettes[] = new Recette(
@@ -183,7 +182,7 @@ class RecettesManager
                     $result['id_categorie']
                 );
             }
-    
+
             return $recettes;
         } catch (PDOException $e) {
             echo "Erreur lors de lae recherche de recettes : " . $e->getMessage();

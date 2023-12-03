@@ -66,6 +66,21 @@ select {
   margin-left: 0.5vh;
 }
 
+.ingredientContainerScroll {
+  max-height: 20vh;
+  overflow-y: scroll;
+}
+
+.ingredientContainer {
+  display: flex;
+  align-items: center; 
+}
+
+.ingredientContainer label {
+  flex-grow: 1;
+  margin-right: 10px; 
+}
+
 button {
   background-color: #4caf50;
   color: white;

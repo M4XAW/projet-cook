@@ -20,8 +20,8 @@ class IngredientManager
             $ingredients[] = new Ingredient(
                 $result['id_ingredient'],
                 $result['nom_ingredient'],
-                $result['quantite'],
-                $result['nom_unite_mesure']
+                null,
+                null
             );
         }
 
@@ -63,14 +63,28 @@ class IngredientManager
 
     public function ajouterIngredients($ingredients, $id_recette)
     {
-        $stmtIngredient = $this->pdo->prepare("INSERT INTO ingredients (nom_ingredient, id_recette) VALUES (:nom_ingredient, :id_recette)");
-
-        foreach ($ingredients as $ingredient) {
-            $nom_ingredient = $ingredient['nom'];
-
-            $stmtIngredient->bindParam(':nom_ingredient', $nom_ingredient);
-            $stmtIngredient->bindParam(':id_recette', $id_recette);
-            $stmtIngredient->execute();
+        $this->pdo->beginTransaction();
+    
+        try {
+            // Insérer les détails des ingrédients de la recette
+            $stmtIngredient = $this->pdo->prepare("INSERT INTO recetteIngredient (id_recette, id_ingredient, quantite, id_unite_mesure) VALUES (:id_recette, :id_ingredient, :quantite, :id_unite_mesure)");
+    
+            foreach ($ingredients as $id_ingredient => $ingredientData) {
+                $quantite = $ingredientData['quantity'];
+                $id_unite_mesure = $ingredientData['unit'];
+    
+                $stmtIngredient->bindParam(':id_recette', $id_recette);
+                $stmtIngredient->bindParam(':id_ingredient', $id_ingredient);
+                $stmtIngredient->bindParam(':quantite', $quantite);
+                $stmtIngredient->bindParam(':id_unite_mesure', $id_unite_mesure);
+                $stmtIngredient->execute();
+            }
+    
+            $this->pdo->commit();
+        } catch (PDOException $e) {
+            $this->pdo->rollBack();
+            // Gérer l'erreur, la journalisation ou le retourner selon votre logique métier
+            echo "Erreur lors de l'ajout des ingrédients : " . $e->getMessage();
         }
     }
     public function supprimerIngredient($id)
