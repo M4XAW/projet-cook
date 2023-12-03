@@ -38,18 +38,18 @@ class IngredientManager
     {
         $deleteStatement = $this->pdo->prepare("DELETE FROM recetteIngredient WHERE id_recette = :id_recette");
         $insertStatement = $this->pdo->prepare("INSERT INTO recetteIngredient (id_recette, id_ingredient, quantite, id_unite_mesure) VALUES (:id_recette, :id_ingredient, :quantite, :id_unite_mesure)");
-    
+
         $this->pdo->beginTransaction();
-    
+
         try {
             // Supprimer d'abord tous les ingrédients liés à la recette
             $deleteStatement->execute([':id_recette' => $id_recette]);
-    
+
             // Insérer ensuite les nouveaux détails des ingrédients de la recette
             foreach ($ingredients as $id_ingredient => $ingredientData) {
                 $quantite = $ingredientData['quantity'];
                 $id_unite_mesure = $ingredientData['unit'];
-    
+
                 $insertStatement->execute([
                     ':id_recette' => $id_recette,
                     ':id_ingredient' => $id_ingredient,
@@ -57,7 +57,7 @@ class IngredientManager
                     ':id_unite_mesure' => $id_unite_mesure
                 ]);
             }
-    
+
             $this->pdo->commit();
         } catch (PDOException $e) {
             $this->pdo->rollBack();
@@ -71,6 +71,33 @@ class IngredientManager
         $stmt = $this->pdo->prepare("INSERT INTO ingredient (nom_ingredient) VALUES (:nomIngredient)");
         $stmt->bindParam(':nomIngredient', $nomIngredient);
         $stmt->execute();
+    }
+
+    public function ajouterIngredients($ingredients, $id_recette)
+    {
+        $this->pdo->beginTransaction();
+    
+        try {
+            // Insérer les détails des ingrédients de la recette
+            $stmtIngredient = $this->pdo->prepare("INSERT INTO recetteIngredient (id_recette, id_ingredient, quantite, id_unite_mesure) VALUES (:id_recette, :id_ingredient, :quantite, :id_unite_mesure)");
+    
+            foreach ($ingredients as $id_ingredient => $ingredientData) {
+                $quantite = $ingredientData['quantity'];
+                $id_unite_mesure = $ingredientData['unit'];
+    
+                $stmtIngredient->bindParam(':id_recette', $id_recette);
+                $stmtIngredient->bindParam(':id_ingredient', $id_ingredient);
+                $stmtIngredient->bindParam(':quantite', $quantite);
+                $stmtIngredient->bindParam(':id_unite_mesure', $id_unite_mesure);
+                $stmtIngredient->execute();
+            }
+    
+            $this->pdo->commit();
+        } catch (PDOException $e) {
+            $this->pdo->rollBack();
+            // Gérer l'erreur, la journalisation ou le retourner selon votre logique métier
+            echo "Erreur lors de l'ajout des ingrédients : " . $e->getMessage();
+        }
     }
 
     public function recupererTousLesIngredients()
