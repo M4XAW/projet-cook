@@ -20,32 +20,32 @@ class CategorieManager
         return $categories;
     }
 
-    public function recupererCategorieParId($id)
+    public function recupererRecettesParCategorie($categorie)
     {
-        $stmt = $this->pdo->prepare("SELECT * FROM categories WHERE id_categorie = :id");
-        $stmt->execute(['id' => $id]);
-        $result = $stmt->fetch();
-        return new Categorie($result['id_categorie'], $result['nom_categorie']);
-    }
+        $stmt = $this->pdo->prepare("SELECT recette.*, categorie.nom_categorie 
+                            FROM recette 
+                            INNER JOIN categorie ON recette.id_categorie = categorie.id_categorie 
+                            WHERE categorie.nom_categorie = :categorie");
 
-    public function ajouterCategorie($nom)
-    {
-        $stmt = $this->pdo->prepare("INSERT INTO categories (nom_categorie) VALUES (:nom)");
-        $stmt->execute(['nom' => $nom]);
-        return $this->pdo->lastInsertId();
-    }
 
-    public function supprimerCategorie($id)
-    {
-        $stmt = $this->pdo->prepare("DELETE FROM categories WHERE id_categorie = :id");
-        $stmt->execute(['id' => $id]);
-    }
+        $stmt->bindParam(':categorie', $categorie);
 
-    public function modifierCategorie($id, $nom)
-    {
-        $stmt = $this->pdo->prepare("UPDATE categories SET nom_categorie = :nom WHERE id_categorie = :id");
-        $stmt->execute(['id' => $id, 'nom' => $nom]);
+        $stmt->execute();
+        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $recettes = [];
+        foreach ($results as $result) {
+            $recettes[] = new Recette(
+                $result['id_recette'],
+                $result['nom_recette'],
+                $result['difficulte'],
+                $result['temps_preparation'],
+                $result['instructions'],
+                $result['image_url'],
+                $result['id_categorie']
+            );
+        }
+
+        return $recettes;
     }
 }
-
-?>

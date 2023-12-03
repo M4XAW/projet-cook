@@ -3,8 +3,13 @@
 require_once('../back/src/config.php');
 require_once('../back/src/Recette.php');
 require_once('../back/src/RecettesManager.php');
+require_once('../back/src/Categorie.php');
+require_once('../back/src/CategorieManager.php');
 
 $recetteManager = new RecettesManager($db);
+
+$categorieManager = new CategorieManager($db);
+
 
 ?>
 
@@ -41,12 +46,22 @@ $recetteManager = new RecettesManager($db);
                 <div class="filter">
                     <a class="addRecipe" href="newRecipe.php"></a>
                     <!-- Faire une boucle pour récupérer toutes les catégories et afficher les recettes en fonction -->
-                    <select name="categories" id="categories">
-                        <option value="1" selected>Toutes</option>
-                        <option value="2">Entrées</option>
-                        <option value="3">Plats</option>
-                        <option value="4">Desserts</option>
-                    </select>
+                    <form action="home.php" method="get" id="filterForm">
+                        <label for="categorie"></label>
+                        <select name="categories" id="categorie" onchange="updateCategory()">
+                            <option value="all" >Toutes</option>
+                            <option value="entree">Entrées</option>
+                            <option value="plat">Plats</option>
+                            <option value="dessert">Desserts</option>
+                        </select>
+                    </form>
+
+                    <script>
+                        function updateCategory() {
+                            document.getElementById("filterForm").submit();
+                        }
+                    </script>
+
                     <form class="searchForm" method="GET" action="home.php">
                         <input type="search" name="search" placeholder="Rechercher"
                             value="<?php echo isset($_GET['search']) ? $_GET['search'] : ''; ?>">
@@ -75,9 +90,9 @@ $recetteManager = new RecettesManager($db);
                     // Récupérer toutes les recettes ou celles d'une catégorie spécifique
                     if ($categorieFilter == 'all') {
                         $recettesData = $recetteManager->recupererToutesLesRecettes();
-                        // } else {
-                        //     $recettesData = $recetteManager->recupererRecettesParCategorie($categorieFilter);
-                    }
+                        } else {
+                            $recettesData = $categorieManager->recupererRecettesParCategorie($categorieFilter);
+                        }
 
                     if (empty($recettesData)) {
                         echo '<p class="empty">Aucune recette n\'a été trouvée.</p>';
@@ -128,8 +143,8 @@ $recetteManager = new RecettesManager($db);
                     } else {
                         echo 'Erreur';
                     }
+                    
                     echo '</p>';
-
                     echo '</div>';
                     echo '</div>';
                     echo '</a>';
